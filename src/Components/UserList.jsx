@@ -38,9 +38,9 @@ const UserList = () => {
             <BsThreeDotsVertical className="text-Secondary" />
           </div>
 
-          <div className="w-full h-[451px] overflow-y-scroll cursor-pointer ">
+          <div className="w-full h-[451px] overflow-y-scroll cursor-pointer">
             {udata.map((item) => (
-              <div className="flex justify-between items-center  border-b border-black/25 pb-3 mt-4">
+              <div key={item} className="flex justify-between items-center  border-b border-black/25 pb-3 mt-4">
                 <div className="flex gap-3 mt-[17px]">
                   <img
                     src={item.profile_picture}
@@ -52,8 +52,8 @@ const UserList = () => {
                       {item.username}
                     </h3>
                     <p className="text-xs font-normal text-FourColor/75 font-Nunito">
-                      {/* {moment(item.Date, "YYYYMMDDhh:mm").fromNow()} */}
-                      {item.email}
+                      {moment(item.Date, "YYYYMMDD").fromNow()}
+                      {/* {item.email} */}
                     </p>
                   </div>
                 </div>

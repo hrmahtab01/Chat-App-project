@@ -10,6 +10,10 @@ import Signin from "./Pages/Signin";
 import Signup from "./Pages/Signup";
 import Home from "./Components/Home";
 import RootElement from "./Components/RootElement";
+import Notification from "./Components/Notification";
+import MessageBox from "./Components/MessageBox";
+import SettingsCom from "./Components/SettingsCom";
+
 
 const App = () => {
   let router = createBrowserRouter(
@@ -19,6 +23,9 @@ const App = () => {
         <Route path="/Signup" element={<Signin />} />
         <Route path="/" element={<RootElement />}>
           <Route index element={<Home />} />
+          <Route path="/Notification" element={<Notification/>}></Route>
+          <Route path="/messageBox" element={<MessageBox/>}></Route>
+          <Route path="/settings" element={<SettingsCom/>}></Route>
         </Route>
         ,
       </>,
