@@ -63,7 +63,7 @@ const SideBar = () => {
           />
         </div>
         <div
-          className="w-full h-[89px] relative mt-[60px] after:contents-[''] after:w-[8px] after:h-full after:bg-Secondary after:absolute after:top-0 after:right-0 after:rounded-s-[25px] after:shadow-md"
+          className="w-full h-[89px] relative mt-[35px] after:contents-[''] after:w-[8px] after:h-full after:bg-Secondary after:absolute after:top-0 after:right-0 after:rounded-s-[25px] after:shadow-md"
           onClick={() => setActivesection("message")}
         >
           <div

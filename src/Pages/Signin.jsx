@@ -71,11 +71,7 @@ const Signin = () => {
                   username: userCredential.user.displayName,
                   email: userCredential.user.email,
                  profile_picture: "/Signin.png",
-                  Date: `${new Date().getFullYear()}-${
-                    new Date().getMonth()
-                  } + 1  ${new Date().getDay()}-${new Date().getHours()}-${
-                    new Date().getMinutes()
-                  }-${new Date().getSeconds()}`,
+                  Date: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDay() + 1}-${new Date().getHours()}-${new Date().getMinutes()}`,
                 }).then(() => {
                   setTimeout(() => {
                     Setloader(false);
