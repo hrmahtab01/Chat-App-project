@@ -5,6 +5,7 @@ import { IoNotificationsOutline, IoSettingsOutline } from "react-icons/io5";
 import { ImExit } from "react-icons/im";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { TbCameraPlus } from "react-icons/tb";
 
 const SideBar = () => {
   const navigate = useNavigate();
@@ -31,17 +32,20 @@ const SideBar = () => {
   return (
     <div className="h-screen py-9 px-8">
       <div className="w-[186px] h-full bg-Secondary rounded-3xl">
-        <div className="text-center">
-          <div>
+        <div className="text-center pt-9">
+          <div className="w-[100px] h-[100px] rounded-full overflow-hidden mx-auto relative group">
             <img
-              className="w-[100px] h-[100px] rounded-full mt-9 inline-block object-cover"
+              className="w-full h-full  object-cover"
               src={data.photoURL}
               alt="profileimage"
             />
-            <h2 className="text-xl font-semibold font-Nunito mt-2 text-[#fff]">
-              {data.displayName}
-            </h2>
+            <div className="w-full h-full bg-[#000]/50 absolute top-0 left-0 flex opacity-0 justify-center items-center group-hover:opacity-100 duration-300">
+            <TbCameraPlus className="text-[#fff] text-2xl " /></div>
+            
           </div>
+          <h2 className="text-xl font-semibold font-Nunito mt-2 text-[#fff]">
+            {data.displayName}
+          </h2>
         </div>
         <div
           className="w-full h-[89px] relative mt-[60px] after:contents-[''] after:w-[8px] after:h-full after:bg-Secondary after:absolute after:top-0 after:right-0 after:rounded-s-[25px] after:shadow-md"

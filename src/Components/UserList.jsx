@@ -52,8 +52,8 @@ const UserList = () => {
                       {item.username}
                     </h3>
                     <p className="text-xs font-normal text-FourColor/75 font-Nunito">
-                      {moment(item.Date, "YYYYMMDD").fromNow()}
-                      {/* {item.email} */}
+                      {/* {moment(item.Date, "YYYYMMDD").fromNow()} */}
+                      {item.email}
                     </p>
                   </div>
                 </div>
