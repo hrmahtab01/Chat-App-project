@@ -4,8 +4,8 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 
 const ChatComponent = () => {
   return (
-    <div className="w-[1000px] h-screen shadow-md rounded-[16px]">
-      <div className="flex justify-between items-center  border-b border-black/25 pb-6 mt-4 px-8">
+    <div className="w-[1000px] h-screen  shadow-md rounded-[16px] px-8">
+      <div className="flex justify-between items-center  border-b border-black/25 pb-6 mt-4 ">
         <div className="flex gap-3  relative">
           <img
             src={mahtabimg}
