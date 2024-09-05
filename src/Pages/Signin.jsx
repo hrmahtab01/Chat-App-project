@@ -57,21 +57,21 @@ const Signin = () => {
       Setloader(true);
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          console.log(userCredential);
-          
           sendEmailVerification(auth.currentUser)
             .then(() => {
               updateProfile(auth.currentUser, {
                 displayName: name,
                 photoURL: "/Signin.png",
-            
-                
               }).then(() => {
                 set(ref(db, "users/" + userCredential.user.uid), {
                   username: userCredential.user.displayName,
                   email: userCredential.user.email,
-                 profile_picture: "/Signin.png",
-                  Date: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDay() + 1}-${new Date().getHours()}-${new Date().getMinutes()}`,
+                  profile_picture: "/Signin.png",
+                  Date: `${new Date().getFullYear()}-${
+                    new Date().getMonth() + 1
+                  }-${
+                    new Date().getDay() + 1
+                  }-${new Date().getHours()}-${new Date().getMinutes()}`,
                 }).then(() => {
                   setTimeout(() => {
                     Setloader(false);
@@ -84,7 +84,6 @@ const Signin = () => {
             .catch((error) => {
               console.log(error);
             });
-        
         })
         .catch((error) => {
           setTimeout(() => {

@@ -5,7 +5,7 @@ import ChatComponent from "./ChatComponent";
 
 const MessageBox = () => {
   return (
-    <div className="flex py-9 gap-[60px]">
+    <div className="flex py-7 gap-[60px]">
       <div>
         <GroupListCom />
         <Friend />

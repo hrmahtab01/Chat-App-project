@@ -6,8 +6,12 @@ import { ImExit } from "react-icons/im";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { TbCameraPlus } from "react-icons/tb";
+import { getAuth, signOut } from "firebase/auth";
+import { Bounce, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SideBar = () => {
+  const auth = getAuth();
   const navigate = useNavigate();
   const [activesection, setActivesection] = useState(null);
 
@@ -23,11 +27,45 @@ const SideBar = () => {
     } else if (activesection === "Settings") {
       navigate("/settings");
     } else if (activesection === "exit") {
-      setTimeout(() => {
-        navigate("/Login");
-      }, 1500);
+      // setTimeout(() => {
+      //   navigate("/Login");
+      // }, 1500);
     }
   }, [activesection, navigate]);
+  let handleSignout = () => {
+    signOut(auth)
+      .then(() => {
+        toast.success("SignOut success", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+      })
+      .catch((error) => {
+        console.log(error);
+
+        toast.error("Login failed", {
+          position: "top-center",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      });
+  };
 
   return (
     <div className="h-screen py-9 px-8">
@@ -40,8 +78,8 @@ const SideBar = () => {
               alt="profileimage"
             />
             <div className="w-full h-full bg-[#000]/50 absolute top-0 left-0 flex opacity-0 justify-center items-center group-hover:opacity-100 duration-300">
-            <TbCameraPlus className="text-[#fff] text-2xl " /></div>
-            
+              <TbCameraPlus className="text-[#fff] text-2xl " />
+            </div>
           </div>
           <h2 className="text-xl font-semibold font-Nunito mt-2 text-[#fff]">
             {data.displayName}
@@ -113,7 +151,22 @@ const SideBar = () => {
           className="mt-[78px] flex justify-center text-[46px] text-[#FFF]"
           onClick={() => setActivesection("exit")}
         >
-          <ImExit />
+        <div className="text-sm">
+        <ImExit className="text-[46px]" onClick={handleSignout} />
+          <ToastContainer
+            position="top-left"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            transition={Bounce}
+          />
+        </div>
         </div>
       </div>
     </div>
