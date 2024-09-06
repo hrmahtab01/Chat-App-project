@@ -36,7 +36,10 @@ const UserList = () => {
 
           <div className="w-full h-[451px] overflow-y-scroll cursor-pointer">
             {udata.map((item) => (
-              <div key={item.uid} className="flex justify-between items-center border-b border-black/25 pb-3 mt-4">
+              <div
+                key={item.uid}
+                className="flex justify-between items-center border-b border-black/25 pb-3 mt-4"
+              >
                 <div className="flex gap-3 mt-[17px]">
                   <img
                     src={item.profile_picture}

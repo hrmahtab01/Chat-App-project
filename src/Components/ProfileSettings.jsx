@@ -65,10 +65,10 @@ const ProfileSettings = () => {
           </div>
         </div>
         <ul className="flex flex-col gap-9 pl-8 mt-11">
-          <li className="flex items-center gap-9 text-3xl">
+          <li  onClick={handleNameUpdate} className="flex items-center gap-9 text-3xl hover:text-Secondary cursor-pointer">
             <RiEdit2Fill
-              onClick={handleNameUpdate}
-              className="text-Secondary cursor-pointer hover:text-ThirdColor duration-300"
+             
+              className="text-Secondary cursor-pointer duration-300"
             />
             Edit Profile Name
           </li>
@@ -104,13 +104,13 @@ const ProfileSettings = () => {
             <div className="flex justify-center items-center mt-16 gap-4 font-Nunito">
               <button
                 onClick={handleChangeSubmit}
-                className="bg-Secondary py-3 px-6 rounded-md text-[#fff] font-Nunito"
+                className="bg-Secondary py-3 px-6 rounded-md text-[#fff] font-Nunito hover:scale-110 duration-200 hover:translate-y-2"
               >
                 Yes, Save
               </button>
               <button
                 onClick={() => setIsEditingName(false)}
-                className="bg-Secondary py-3 px-6 rounded-md text-[#fff]"
+                className="bg-Secondary py-3 px-6 rounded-md text-[#fff] hover:scale-110 duration-200 hover:translate-y-2"
               >
                 Cancel
               </button>

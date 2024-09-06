@@ -72,9 +72,9 @@ const AccountSettings = () => {
       </div>
       <div className="mt-[35px] ml-[80px]">
         <ul className="flex flex-col gap-7">
-          <li className="font-normal text-xl font-Nunito text-ThirdColor flex gap-9 items-center">
+          <li onClick={handleEditPasswordClick} className="font-normal text-xl font-Nunito text-ThirdColor flex gap-9 items-center hover:text-Secondary duration-100 cursor-pointer">
             <FaKey
-              onClick={handleEditPasswordClick}
+              
               className="text-Secondary text-2xl cursor-pointer hover:text-ThirdColor duration-300"
             />
             Change Password
@@ -83,9 +83,9 @@ const AccountSettings = () => {
             <IoInvertModeOutline className="text-Secondary text-2xl cursor-pointer hover:text-ThirdColor duration-300" />
             Theme
           </li>
-          <li className="font-normal text-xl font-Nunito text-ThirdColor flex gap-9 items-center">
+          <li  onClick={handleDeleteAccountClick} className="font-normal text-xl font-Nunito text-ThirdColor flex gap-9 items-center hover:text-Secondary duration-100 cursor-pointer">
             <MdDelete
-              onClick={handleDeleteAccountClick}
+             
               className="text-Secondary text-2xl cursor-pointer hover:text-ThirdColor duration-300"
             />
             Delete Account
@@ -115,13 +115,13 @@ const AccountSettings = () => {
                 <div className="flex justify-center items-center mt-4 gap-4">
                   <button
                     onClick={handleConfirmDelete}
-                    className="bg-Secondary py-3 px-6 rounded-md text-[#fff]"
+                    className="bg-Secondary py-3 px-6 rounded-md text-[#fff] hover:scale-110 duration-200 hover:translate-y-2"
                   >
                     Yes, Delete
                   </button>
                   <button
                     onClick={() => setIsDeleteModalOpen(false)}
-                    className="bg-Secondary py-3 px-6 rounded-md text-[#fff]"
+                    className="bg-Secondary py-3 px-6 rounded-md text-[#fff] hover:scale-110 duration-200 hover:translate-y-2"
                   >
                     Cancel
                   </button>
@@ -148,13 +148,13 @@ const AccountSettings = () => {
               <div className="flex justify-center items-center mt-16 gap-4 font-Nunito">
                 <button
                   onClick={handlePasswordChangeSubmit}
-                  className="bg-Secondary py-3 px-6 rounded-md text-[#fff] font-Nunito"
+                  className="bg-Secondary py-3 px-6 rounded-md text-[#fff] font-Nunito hover:scale-110 duration-200 hover:translate-y-2"
                 >
                   Yes, Save
                 </button>
                 <button
                   onClick={() => setIsEditPasswordModalOpen(false)}
-                  className="bg-Secondary py-3 px-6 rounded-md text-[#fff]"
+                  className="bg-Secondary py-3 px-6 rounded-md text-[#fff] hover:scale-110 duration-200 hover:translate-y-2"
                 >
                   Cancel
                 </button>
