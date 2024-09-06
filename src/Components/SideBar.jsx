@@ -48,6 +48,7 @@ const SideBar = () => {
         });
         setTimeout(() => {
           navigate("/login");
+          localStorage.clear()
         }, 2000);
       })
       .catch((error) => {
