@@ -12,14 +12,14 @@ const UserList = () => {
 
   useEffect(() => {
     const usersdata = ref(db, "users/");
-    const arary = [];
+    const array = [];
     onValue(usersdata, (snapshot) => {
       snapshot.forEach((item) => {
         if (data.uid !== item.key) {
-          arary.push(item.val());
+          array.push(item.val());
         }
       });
-      setUdata(arary);
+      setUdata(array);
     });
   }, [data.uid, db]);
 
@@ -35,9 +35,9 @@ const UserList = () => {
           </div>
 
           <div className="w-full h-[451px] overflow-y-scroll cursor-pointer">
-            {udata.map((item) => (
+            {udata.map((item, index) => (
               <div
-                key={item.uid}
+                key={index.uid}
                 className="flex justify-between items-center border-b border-black/25 pb-3 mt-4"
               >
                 <div className="flex gap-3 mt-[17px]">

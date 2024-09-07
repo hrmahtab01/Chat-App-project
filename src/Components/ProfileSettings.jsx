@@ -13,7 +13,8 @@ const ProfileSettings = () => {
   const [isEditingName, setIsEditingName] = useState(false);
   const [newName, setNewName] = useState("");
   let dispatch = useDispatch();
- 
+  let [status, Setstatus] = useState(false);
+  let [statusData, SetstatusData] = useState("");
 
   const handleNameUpdate = () => {
     setIsEditingName(true);
@@ -29,8 +30,8 @@ const ProfileSettings = () => {
         displayName: newName,
       })
         .then(() => {
-          dispatch(UserDataStore(auth.currentUser))
-          localStorage.setItem("user", JSON.stringify(auth.currentUser) )
+          dispatch(UserDataStore(auth.currentUser));
+          localStorage.setItem("user", JSON.stringify(auth.currentUser));
           // Profile updated successfully
           setIsEditingName(false); // Close the modal after update
         })
@@ -43,6 +44,18 @@ const ProfileSettings = () => {
     }
   };
 
+  let HandleStatusUpdate = () => {
+    Setstatus(true);
+  };
+  let HandleStatusSubmit = () => {
+    SetstatusData(statusData);
+  };
+  let HandleChangeStatusData =(e) => {
+    SetstatusData(e.target.value)
+  }
+  let HandleStatuscancel = () =>{
+    Setstatus(false)
+  }
   return (
     <div className="w-full h-[750px] shadow-md rounded-[16px] py-7 px-7">
       <div>
@@ -52,27 +65,30 @@ const ProfileSettings = () => {
         <div className="pt-[49px] flex items-center gap-7 border-b border-ThirdColor/25 pb-7 ml-3">
           <img
             className="w-[100px] h-[100px] rounded-full object-cover"
-            src={data.photoURL}
+            src={data?.photoURL}
             alt="Profile"
           />
           <div>
             <h3 className="font-semibold text-[25px] text-ThirdColor font-Nunito">
-              {data.displayName}
+              {data?.displayName}
             </h3>
             <p className="font-normal font-Nunito text-xl text-ThirdColor">
-              Stay home stay safe
+              {statusData}
             </p>
           </div>
         </div>
         <ul className="flex flex-col gap-9 pl-8 mt-11">
-          <li  onClick={handleNameUpdate} className="flex items-center gap-9 text-3xl hover:text-Secondary cursor-pointer">
-            <RiEdit2Fill
-             
-              className="text-Secondary cursor-pointer duration-300"
-            />
+          <li
+            onClick={handleNameUpdate}
+            className="flex items-center gap-9 text-3xl hover:text-Secondary cursor-pointer"
+          >
+            <RiEdit2Fill className="text-Secondary cursor-pointer duration-300" />
             Edit Profile Name
           </li>
-          <li className="flex items-center gap-9 text-3xl">
+          <li
+            onClick={HandleStatusUpdate}
+            className="flex items-center gap-9 text-3xl"
+          >
             <MdEditDocument className="text-Secondary cursor-pointer hover:text-ThirdColor duration-300" />
             Edit Profile Status Info
           </li>
@@ -118,7 +134,35 @@ const ProfileSettings = () => {
           </div>
         </div>
       )}
-     
+      {status && (
+        <div className="w-full h-full absolute top-0 left-0 bg-ThirdColor/30 flex justify-center items-center ">
+          <div className="w-[500px] h-[300px] bg-[#fff] rounded-xl hadow-md flex flex-col justify-center gap-4 items-center">
+            <h2 className="text-lg font-semibold font-Nunito">
+              Edit Profile Status{" "}
+            </h2>
+            <div className="w-[247px] h-[47px] ">
+              <input onChange={HandleChangeStatusData}
+                className="w-full h-full border border-Primary rounded-md pl-3 text-lg"
+                type="text"
+              />
+            </div>
+            <div className="flex gap-3">
+              <button
+                onClick={HandleStatusSubmit}
+                className="py-3 px-6 bg-Secondary text-[#fff] font-semibold font-Nunito rounded-md"
+              >
+                Yes ,sure
+              </button>
+              <button
+                onClick={HandleStatuscancel}
+                className="py-3 px-6 bg-Secondary text-[#fff] font-semibold font-Nunito rounded-md"
+              >
+                cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -89,9 +89,11 @@ const SideBar = () => {
   };
 
   const handleImageUpload = () => {
-    const storageRef = ref(storage, `profile-pictures/${Date.now()}`);
+    const storageRef = ref(storage, "some-child");
     if (cropperRef.current?.cropper) {
-      const croppedImage = cropperRef.current.cropper.getCroppedCanvas().toDataURL();
+      const croppedImage = cropperRef.current.cropper
+        .getCroppedCanvas()
+        .toDataURL();
       uploadString(storageRef, croppedImage, "data_url")
         .then(() => getDownloadURL(storageRef))
         .then((downloadURL) => {
@@ -143,6 +145,10 @@ const SideBar = () => {
     };
     reader.readAsDataURL(files[0]);
   };
+  let HandleIgameUpdatecancel = () => {
+    SetimageUpdateModal(false);
+    setImage("");
+  };
 
   return (
     <div className="h-screen py-9 px-8">
@@ -151,7 +157,7 @@ const SideBar = () => {
           <div className="w-[100px] h-[100px] rounded-full overflow-hidden mx-auto relative group">
             <img
               className="w-full h-full  object-cover"
-              src={data.photoURL}
+              src={data?.photoURL}
               alt="profileimage"
             />
             <div
@@ -162,7 +168,7 @@ const SideBar = () => {
             </div>
           </div>
           <h2 className="text-xl font-semibold font-Nunito mt-2 text-[#fff]">
-            {data.displayName}
+            {data?.displayName}
           </h2>
         </div>
         <div
@@ -172,7 +178,7 @@ const SideBar = () => {
           <div
             className={`w-[161px] h-[89px] bg-[#ffff] ml-auto rounded-lg ${
               activesection === "home" ? "block" : "hidden"
-            }`}
+            } `}
           ></div>
           <FaHome
             className={`text-[46px] absolute top-2/4 left-2/4 translate-x-[-50%] translate-y-[-50%] ${
@@ -311,7 +317,7 @@ const SideBar = () => {
                 </button>
               )}
               <button
-                onClick={() => SetimageUpdateModal(false)}
+                onClick={HandleIgameUpdatecancel}
                 className="bg-Secondary py-3 px-6 rounded-md text-[#fff] hover:scale-110 duration-200 hover:translate-y-2"
               >
                 Cancel
