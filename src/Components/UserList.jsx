@@ -11,17 +11,21 @@ const UserList = () => {
   const data = useSelector((state) => state.UserData.value);
 
   useEffect(() => {
-    const usersdata = ref(db, "users/");
-    const array = [];
-    onValue(usersdata, (snapshot) => {
-      snapshot.forEach((item) => {
-        if (data.uid !== item.key) {
-          array.push(item.val());
-        }
+      const usersdata = ref(db, "users/");
+      const array = [];
+      onValue(usersdata, (snapshot) => {
+        snapshot.forEach((item) => {
+          if ( data.uid !== item.key) {
+            array.push(item.val());
+          }
+         
+          
+        });
+        setUdata(array);
       });
-      setUdata(array);
-    });
-  }, [data.uid, db]);
+    },
+    [data.uid, db]
+  );
 
   return (
     <section>
@@ -33,15 +37,11 @@ const UserList = () => {
             </h3>
             <BsThreeDotsVertical className="text-Secondary" />
           </div>
-
           <div className="w-full h-[451px] overflow-y-scroll cursor-pointer">
-            {udata.map((item, index) => (
-              <div
-                key={index.uid}
-                className="flex justify-between items-center border-b border-black/25 pb-3 mt-4"
-              >
+            {udata.map((item ,index) => (
+              <div key={index} className="flex justify-between items-center border-b border-black/25 pb-3 mt-4">
                 <div className="flex gap-3 mt-[17px]">
-                  <img
+                  <img 
                     src={item.profile_picture}
                     alt="profile"
                     className="w-[52px] h-[52px] rounded-full object-cover"

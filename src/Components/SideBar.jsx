@@ -89,49 +89,57 @@ const SideBar = () => {
   };
 
   const handleImageUpload = () => {
-    const storageRef = ref(storage, "some-child");
-    if (cropperRef.current?.cropper) {
-      const croppedImage = cropperRef.current.cropper
+    const storageRef = ref(storage, `UsersData/${Date.now()}`);
+    if (typeof cropperRef.current?.cropper !== "undefined") {
+      setCropData(cropperRef.current?.cropper.getCroppedCanvas().toDataURL());
+      const message4 = cropperRef.current?.cropper
         .getCroppedCanvas()
         .toDataURL();
-      uploadString(storageRef, croppedImage, "data_url")
-        .then(() => getDownloadURL(storageRef))
-        .then((downloadURL) => {
-          return updateProfile(auth.currentUser, { photoURL: downloadURL });
-        })
-        .then(() => {
-          setloader(true);
-          toast.success("Image uploaded successfully!", {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            theme: "light",
-            transition: Slide,
-          });
-          dispatch(UserDataStore(data.currentUser));
-          setTimeout(() => {
-            setloader(false);
-            SetimageUpdateModal(false);
-          }, 2000);
-        })
-        .catch((error) => {
-          console.error(error);
-          toast.error("Image upload failed!", {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            theme: "light",
-            transition: Slide,
-          });
+      uploadString(storageRef, message4, "data_url").then((snapshot) => {
+        getDownloadURL(storageRef).then((Downloadurl) => {
+          updateProfile(auth.currentUser, {
+            photoURL: Downloadurl,
+          })
+            .then(() => {
+              toast.success("Profile Update successfully", {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Slide,
+              });
+              dispatch(UserDataStore(auth.currentUser));
+              setloader(true);
+
+              setTimeout(() => {
+                setloader(false);
+                SetimageUpdateModal(false);
+                setCropData("");
+                setImage("");
+              }, 2000);
+            })
+
+            .catch((error) => {
+              toast.error("Image upload failed!", {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                theme: "light",
+                transition: Slide,
+              });
+            });
         });
+      });
     }
   };
+
   let HandleImagefile = (e) => {
     let files;
     if (e.dataTransfer) {
