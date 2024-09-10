@@ -89,7 +89,7 @@ const Signup = () => {
           username: result.user.displayName,
           email: result.user.email,
           profile_picture: result.user.photoURL,
-          Date: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDay() +1}-${new Date().getHours()}-${new Date().getMinutes()}`,
+          Date: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}-${new Date().getHours()}-${new Date().getMinutes()}-${new Date().getSeconds()}`,
         }).then(() => {
           toast.success("Login success", {
             position: "top-center",

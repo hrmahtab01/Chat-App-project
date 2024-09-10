@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { createRef, useEffect, useState } from "react";
 import profileimg from "../assets/mahtab.jpg";
 import { RiEdit2Fill } from "react-icons/ri";
 import { MdEditDocument, MdAddPhotoAlternate } from "react-icons/md";
@@ -6,8 +6,10 @@ import { IoMdHelpCircle } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { getAuth, updateProfile } from "firebase/auth";
 import { UserDataStore } from "../Slices/UserDataSlice";
+import { getDatabase, ref as dref, update } from "firebase/database";
 
 const ProfileSettings = () => {
+  const db = getDatabase();
   const auth = getAuth();
   const data = useSelector((state) => state.UserData.value);
   const [isEditingName, setIsEditingName] = useState(false);
@@ -32,15 +34,16 @@ const ProfileSettings = () => {
         .then(() => {
           dispatch(UserDataStore(auth.currentUser));
           localStorage.setItem("user", JSON.stringify(auth.currentUser));
-          // Profile updated successfully
-          setIsEditingName(false); // Close the modal after update
+          update(dref(db, "users/" + data.uid), {
+            username: newName,
+          });
+
+          setIsEditingName(false);
         })
         .catch((error) => {
           console.error("Error updating profile: ", error);
-          // Handle error (e.g., show an error message to the user)
         });
     } else {
-      // Handle empty name case (e.g., show an error message)
     }
   };
 
@@ -50,12 +53,13 @@ const ProfileSettings = () => {
   let HandleStatusSubmit = () => {
     SetstatusData(statusData);
   };
-  let HandleChangeStatusData =(e) => {
-    SetstatusData(e.target.value)
-  }
-  let HandleStatuscancel = () =>{
-    Setstatus(false)
-  }
+  let HandleChangeStatusData = (e) => {
+    SetstatusData(e.target.value);
+  };
+  let HandleStatuscancel = () => {
+    Setstatus(false);
+  };
+
   return (
     <div className="w-full h-[750px] shadow-md rounded-[16px] py-7 px-7">
       <div>
@@ -73,7 +77,7 @@ const ProfileSettings = () => {
               {data?.displayName}
             </h3>
             <p className="font-normal font-Nunito text-xl text-ThirdColor">
-              {statusData}
+              joyyy bangla
             </p>
           </div>
         </div>
@@ -141,7 +145,8 @@ const ProfileSettings = () => {
               Edit Profile Status{" "}
             </h2>
             <div className="w-[247px] h-[47px] ">
-              <input onChange={HandleChangeStatusData}
+              <input
+                onChange={HandleChangeStatusData}
                 className="w-full h-full border border-Primary rounded-md pl-3 text-lg"
                 type="text"
               />
