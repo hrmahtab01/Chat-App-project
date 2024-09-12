@@ -39,18 +39,21 @@ const UserList = () => {
     set(push(ref(db, "FriendRequest/")), {
       SenderId: data.uid,
       SenderName: data.displayName,
+      SenderImage: data.photoURL,
       Senderemail: data.email,
       ReciverId: item.uid,
       ReciverName: item.username,
+      ReciverImage: item.profile_picture,
       Reciveremail: item.email,
       Date: `${new Date().getFullYear()}-${
         new Date().getMonth() + 1
       }-${new Date().getDate()}-${new Date().getHours()}-${new Date().getMinutes()}-${new Date().getSeconds()}`,
-    }).then(()=>{
-      alert("success")
-    })
+    }).then(() => {
+      alert("success");
+    });
   };
-console.log(requestsend);
+console.log();
+
 
   return (
     <section>
@@ -83,21 +86,18 @@ console.log(requestsend);
                     </p>
                   </div>
                 </div>
-                {requestsend.includes(data.uid + item.uid) || requestsend.includes(item.uid + data.uid) ? (
-                
-                  <button
-                   
-                    className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]"
-                  >
-                   <RxCross2 />
+                {requestsend.includes(data.uid + item.uid) ||
+                requestsend.includes(item.uid + data.uid) ? (
+                  <button className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]">
+                    <RxCross2 />
                   </button>
                 ) : (
                   <button
-                  onClick={() => Handlesendfirendrequest(item)}
-                  className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]"
-                >
-                  <FaPlus />
-                </button>
+                    onClick={() => Handlesendfirendrequest(item)}
+                    className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]"
+                  >
+                    <FaPlus />
+                  </button>
                 )}
               </div>
             ))}

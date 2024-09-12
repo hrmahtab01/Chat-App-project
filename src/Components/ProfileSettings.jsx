@@ -24,7 +24,7 @@ const ProfileSettings = () => {
 
   const handleNameChange = (e) => {
     setNewName(e.target.value);
-  };
+  };  
 
   const handleChangeSubmit = () => {
     if (newName.trim()) {

@@ -19,7 +19,7 @@ import { Oval } from "react-loader-spinner";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { UserDataStore } from "../Slices/UserDataSlice";
-import { getDatabase,ref as dref, update } from "firebase/database";
+import { getDatabase, ref as dref, update } from "firebase/database";
 
 const SideBar = () => {
   const db = getDatabase();
@@ -117,7 +117,6 @@ const SideBar = () => {
               dispatch(UserDataStore(auth.currentUser));
               update(dref(db, "users/" + data.uid), {
                 profile_picture: Downloadurl,
-
               });
               setloader(true);
 
