@@ -26,13 +26,13 @@ const Friend = () => {
     onValue(dataRef, (snapshot) => {
       snapshot.forEach((item) => {
         if (data.uid == item.val().ReciverId) {
-          array.push({ ...item.val(), uid: item.key });
+          array.push({ ...item.val(), uid:item.key });
         }
       });
 
       Setfirndrequestlist(array);
     });
-  }, []);
+  }, [ ]);
 
   let HandleConfirmRequest = (item) => {
     set(push(ref(db, "Friendlist/")), {

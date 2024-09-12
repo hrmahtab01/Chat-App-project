@@ -11,6 +11,7 @@ const UserList = () => {
   const [udata, setUdata] = useState([]);
   const data = useSelector((state) => state.UserData.value);
   let [requestsend, Setrequestend] = useState([]);
+  let [frienddata, setfrienddata] = useState([]);
 
   useEffect(() => {
     const usersdata = ref(db, "users/");
@@ -32,9 +33,21 @@ const UserList = () => {
       snapshot.forEach((item) => {
         array.push(item.val().SenderId + item.val().ReciverId);
       });
+      setfrienddata(array);
+    });
+  }, [data.uid, db]);
+
+  useEffect(() => {
+    const friendsdata = ref(db, "Friendlist/");
+    const array = [];
+    onValue(friendsdata, (snapshot) => {
+      snapshot.forEach((item) => {
+        array.push(item.val().SenderId + item.val().ReciverId);
+      });
       Setrequestend(array);
     });
   }, [data.uid, db]);
+
   let Handlesendfirendrequest = (item) => {
     set(push(ref(db, "FriendRequest/")), {
       SenderId: data.uid,
@@ -52,8 +65,6 @@ const UserList = () => {
       alert("success");
     });
   };
-console.log();
-
 
   return (
     <section>
@@ -86,10 +97,16 @@ console.log();
                     </p>
                   </div>
                 </div>
-                {requestsend.includes(data.uid + item.uid) ||
-                requestsend.includes(item.uid + data.uid) ? (
+
+                {frienddata.includes(data.uid + item.uid) ||
+                frienddata.includes(item.uid + data.uid) ? (
                   <button className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]">
                     <RxCross2 />
+                  </button>
+                ) : requestsend.includes(data.uid + item.uid) ||
+                  requestsend.includes(item.uid + data.uid) ? (
+                  <button className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]">
+                  friend
                   </button>
                 ) : (
                   <button
