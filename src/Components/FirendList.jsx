@@ -7,8 +7,10 @@ import profileimage3 from "../assets/Signup.jpg";
 import { getDatabase, ref, onValue } from "firebase/database";
 import moment from "moment";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const FriendList = () => {
+  let navigate = useNavigate();
   let data = useSelector((state) => state.UserData.value);
   const db = getDatabase();
   let [FriendData, SetfriendData] = useState([]);
@@ -27,8 +29,11 @@ const FriendList = () => {
       });
       SetfriendData(array);
     });
-  },[]);
+  }, [data.uiddb]);
 
+  let HandleUSerprofile = () => {
+    navigate("/Userprofile");
+  };
   return (
     <section>
       <div className="  ">
@@ -44,21 +49,33 @@ const FriendList = () => {
               <div className="flex justify-between items-center  border-b border-black/25 pb-6 mt-4">
                 <div className="flex gap-3 mt-[17px]">
                   {data.uid == item.ReciverId ? (
-                    <img
-                      src={item.SenderImage}
-                      alt="progileimage"
-                      className="w-[52px] h-[52px] rounded-full object-cover"
-                    />
+                    <div className="w-[52px] h-[52px] relative">
+                      <img
+                        src={item.SenderImage}
+                        alt="progileimage"
+                        className=" w-full h-full rounded-full object-cover"
+                      />
+                      <div
+                        onClick={HandleUSerprofile}
+                        className="w-full h-full bg-ThirdColor/40 absolute top-0 left-0 rounded-full opacity-0 hover:opacity-100 duration-100"
+                      ></div>
+                    </div>
                   ) : (
-                    <img
-                      src={item.ReciverImage}
-                      alt="progileimage"
-                      className="w-[52px] h-[52px] rounded-full object-cover"
-                    />
+                    <div className="w-[52px] h-[52px] relative">
+                      <img
+                        src={item.ReciverImage}
+                        alt="progileimage"
+                        className=" w-full h-full rounded-full object-cover"
+                      />
+                      <div
+                        onClick={HandleUSerprofile}
+                        className="w-full h-full bg-ThirdColor/40 absolute top-0 left-0 rounded-full opacity-0 hover:opacity-100 duration-100"
+                      ></div>
+                    </div>
                   )}
 
                   <div className="">
-                    {data.uid == item.ReciverId  ? (
+                    {data.uid == item.ReciverId ? (
                       <h3 className="text-sm font-semibold font-Nunito text-ThirdColor">
                         {item.SenderName}
                       </h3>
