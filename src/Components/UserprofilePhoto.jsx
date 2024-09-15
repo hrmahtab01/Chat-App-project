@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 const UserprofilePhoto = () => {
   const db = getDatabase();
-  const data = useSelector((state) => state.UserData.value);
+  const data = useSelector((state) => state.ProfiledData.value);
   const [userFullPhotos, setUserFullPhotos] = useState([]);
 
   useEffect(() => {
@@ -30,13 +30,21 @@ const UserprofilePhoto = () => {
     const userPhoto = userFullPhotos.find(
       (item) => item.receiverId === data.uid || item.senderId === data.uid
     );
-    return userPhoto ? (userPhoto.senderId === data.uid ? userPhoto.senderImage : userPhoto.receiverImage) : '';
+    return userPhoto
+      ? userPhoto.senderId === data.uid
+        ? userPhoto.senderImage
+        : userPhoto.receiverImage
+      : "";
   };
 
   return (
-    <div className="w-full bg-FourColor">
-      <div className="w-full h-screen">
-        <img className="w-full h-full" src={getProfileImage()} alt="User Profile" />
+    <div className="w-full bg-FourColor flex justify-center">
+      <div className="w-[1000px] h-screen">
+        <img
+          className="w-full h-full object-cover"
+          src={data.profile_picture}
+          alt="User Profile"
+        />
       </div>
       <div></div>
     </div>

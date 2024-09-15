@@ -8,6 +8,7 @@ import { RxCross2 } from "react-icons/rx";
 import { ref as dref } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import UserProfile from "./UserProfile";
+import { userprofilestore } from "../Slices/UserProfile";
 
 const UserList = () => {
   let navigate = useNavigate();
@@ -79,6 +80,7 @@ const UserList = () => {
       profile_picture: item.profile_picture,
     })
       .then(() => {
+        dispatch(userprofilestore(item))
         navigate("/Userprofile");
       });
   };

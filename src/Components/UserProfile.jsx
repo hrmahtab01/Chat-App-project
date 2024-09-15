@@ -4,16 +4,18 @@ import { FaUser } from "react-icons/fa";
 import { AiFillMessage } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { UserDataStore } from "../Slices/UserDataSlice";
 import { getDatabase, ref, onValue } from "firebase/database";
 
 const UserProfile = () => {
+  const data =useSelector((state)=>state.ProfiledData.value)
   let navigate = useNavigate();
-  const data = useSelector((state) => state.UserData.value);
   let [Profieldata, setprofiledata] = useState([]);
   const db = getDatabase();
+  console.log(data);
+  
 
   useEffect(() => {
+    
     const userdata = ref(db, "userprofile/");
     let array = [];
     onValue(userdata, (snapshot) => {
@@ -28,9 +30,6 @@ const UserProfile = () => {
   let HandleUserfullPhoto = () => {
     navigate("/Profilephoto");
   };
-
-  console.log(Profieldata[0,1,2]);
-  
   return (
     <div className="bg-ThirdColor/80 w-full flex justify-center overflow-y-scroll py-10">
       <div className="w-[1000px] h-screen">
@@ -39,7 +38,7 @@ const UserProfile = () => {
             <div className="w-[170px] h-[170px] relative overflow-hidden rounded-full ">
               <img
                 className=" object-cover"
-                src={Profieldata.profile_picture}
+                src={data.profile_picture}
                 alt="profileimage"
               />
               <div
@@ -49,10 +48,10 @@ const UserProfile = () => {
             </div>
             <div>
               <h3 className="text-[#fff] text-2xl font-semibold font-Nunito ">
-                {Profieldata.username}
+                {data.username}
               </h3>
               <p className="text-[#fff] text-base font-semibold font-Nunito">
-                {Profieldata.email}
+                {data.email}
               </p>
             </div>
           </div>

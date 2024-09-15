@@ -6,7 +6,7 @@ import  UserprofileSlice  from "./Slices/UserProfile";
 export const store = configureStore({
   reducer: {
     UserData: UserDataSlice,
-   profile:UserprofileSlice,
+   ProfiledData:UserprofileSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
