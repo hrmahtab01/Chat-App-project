@@ -3,15 +3,20 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
 import { getDatabase, ref, onValue, set, push } from "firebase/database";
 import moment from "moment";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RxCross2 } from "react-icons/rx";
+import { ref as dref } from "firebase/database";
+import { useNavigate } from "react-router-dom";
+import UserProfile from "./UserProfile";
 
 const UserList = () => {
+  let navigate = useNavigate();
   const db = getDatabase();
   const [udata, setUdata] = useState([]);
   const data = useSelector((state) => state.UserData.value);
   let [requestsend, Setrequestend] = useState([]);
   let [frienddata, setfrienddata] = useState([]);
+  let dispatch = useDispatch();
 
   useEffect(() => {
     const usersdata = ref(db, "users/");
@@ -66,6 +71,17 @@ const UserList = () => {
     });
   };
 
+  let Handleshowprofile = (item) => {
+    const db = getDatabase();
+     set(dref(db, "userprofile/" + item.uid), {
+      username: item.username,
+      email: item.email,
+      profile_picture: item.profile_picture,
+    })
+      .then(() => {
+        navigate("/Userprofile");
+      });
+  };
   return (
     <section>
       <div>
@@ -84,6 +100,7 @@ const UserList = () => {
               >
                 <div className="flex gap-3 mt-[17px]">
                   <img
+                    onClick={() => Handleshowprofile(item)}
                     src={item.profile_picture}
                     alt="profile"
                     className="w-[52px] h-[52px] rounded-full object-cover"
@@ -106,7 +123,7 @@ const UserList = () => {
                 ) : requestsend.includes(data.uid + item.uid) ||
                   requestsend.includes(item.uid + data.uid) ? (
                   <button className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]">
-                  friend
+                    friend
                   </button>
                 ) : (
                   <button

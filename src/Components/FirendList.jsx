@@ -4,7 +4,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import progileimage from "../assets/mahtab.jpg";
 import Profileimage2 from "../assets/Signin.png";
 import profileimage3 from "../assets/Signup.jpg";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, set, push } from "firebase/database";
 import moment from "moment";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -29,11 +29,16 @@ const FriendList = () => {
       });
       SetfriendData(array);
     });
-  }, [data.uiddb]);
+  }, [data.uid ,db]);
 
-  let HandleUSerprofile = () => {
-    navigate("/Userprofile");
+  let HandleUSerprofile = (item) => {
+    set(ref(db, 'Userprofiledata/'), {
+      ...item,
+    }).then(() => {
+      navigate("/Userprofile");
+    });
   };
+
   return (
     <section>
       <div className="  ">
@@ -56,7 +61,7 @@ const FriendList = () => {
                         className=" w-full h-full rounded-full object-cover"
                       />
                       <div
-                        onClick={HandleUSerprofile}
+                        onClick={() => HandleUSerprofile(item)}
                         className="w-full h-full bg-ThirdColor/40 absolute top-0 left-0 rounded-full opacity-0 hover:opacity-100 duration-100"
                       ></div>
                     </div>
@@ -68,7 +73,7 @@ const FriendList = () => {
                         className=" w-full h-full rounded-full object-cover"
                       />
                       <div
-                        onClick={HandleUSerprofile}
+                        onClick={() => HandleUSerprofile(item)}
                         className="w-full h-full bg-ThirdColor/40 absolute top-0 left-0 rounded-full opacity-0 hover:opacity-100 duration-100"
                       ></div>
                     </div>
