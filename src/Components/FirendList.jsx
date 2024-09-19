@@ -17,8 +17,8 @@ const FriendList = () => {
 
   useEffect(() => {
     const starCountRef = ref(db, "Friendlist/");
-    let array = [];
     onValue(starCountRef, (snapshot) => {
+      let array = [];
       snapshot.forEach((item) => {
         if (
           data.uid == item.val().SenderId ||
@@ -29,7 +29,7 @@ const FriendList = () => {
       });
       SetfriendData(array);
     });
-  }, [data.uid ,db]);
+  }, [navigate ,db]);
 
   let HandleUSerprofile = (item) => {
     set(ref(db, 'Userprofiledata/'), {

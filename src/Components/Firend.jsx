@@ -14,6 +14,7 @@ import {
   set,
 } from "firebase/database";
 import moment from "moment";
+import { Navigate } from "react-router-dom";
 
 const Friend = () => {
   let data = useSelector((state) => state.UserData.value);
@@ -22,17 +23,17 @@ const Friend = () => {
 
   useEffect(() => {
     const dataRef = ref(db, "FriendRequest/");
-    let array = [];
     onValue(dataRef, (snapshot) => {
+      let array = [];
       snapshot.forEach((item) => {
         if (data.uid == item.val().ReciverId) {
-          array.push({ ...item.val(), uid:item.key });
+          array.push({ ...item.val(), uid: item.key });
         }
       });
 
       Setfirndrequestlist(array);
     });
-  }, [ ]);
+  }, [db, data.uid, Navigate]);
 
   let HandleConfirmRequest = (item) => {
     set(push(ref(db, "Friendlist/")), {
@@ -42,9 +43,9 @@ const Friend = () => {
     });
   };
 
-  let handleRequestdelete =(item)=>{
+  let handleRequestdelete = (item) => {
     remove(ref(db, "FriendRequest/" + item.uid));
-  }
+  };
 
   return (
     <section>
@@ -84,7 +85,10 @@ const Friend = () => {
                   >
                     Accept
                   </button>
-                  <button onClick={()=>handleRequestdelete(item)} className="px-5 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px] ">
+                  <button
+                    onClick={() => handleRequestdelete(item)}
+                    className="px-5 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px] "
+                  >
                     Delete
                   </button>
                 </div>

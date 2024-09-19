@@ -34,25 +34,25 @@ const UserList = () => {
 
   useEffect(() => {
     const usersdata = ref(db, "FriendRequest/");
-    const array = [];
     onValue(usersdata, (snapshot) => {
+      const array = [];
       snapshot.forEach((item) => {
         array.push(item.val().SenderId + item.val().ReciverId);
       });
       setfrienddata(array);
     });
-  }, [data.uid, db]);
+  }, [data.uid, db, navigate]);
 
   useEffect(() => {
     const friendsdata = ref(db, "Friendlist/");
-    const array = [];
     onValue(friendsdata, (snapshot) => {
+      const array = [];
       snapshot.forEach((item) => {
         array.push(item.val().SenderId + item.val().ReciverId);
       });
       Setrequestend(array);
     });
-  }, [data.uid, db]);
+  }, [data.uid, db, navigate]);
 
   let Handlesendfirendrequest = (item) => {
     set(push(ref(db, "FriendRequest/")), {
@@ -74,15 +74,14 @@ const UserList = () => {
 
   let Handleshowprofile = (item) => {
     const db = getDatabase();
-     set(dref(db, "userprofile/" + item.uid), {
+    set(dref(db, "userprofile/" + item.uid), {
       username: item.username,
       email: item.email,
       profile_picture: item.profile_picture,
-    })
-      .then(() => {
-        dispatch(userprofilestore(item))
-        navigate("/Userprofile");
-      });
+    }).then(() => {
+      dispatch(userprofilestore(item));
+      navigate("/Userprofile");
+    });
   };
   return (
     <section>

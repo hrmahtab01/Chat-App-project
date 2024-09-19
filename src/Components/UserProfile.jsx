@@ -7,18 +7,16 @@ import { useSelector } from "react-redux";
 import { getDatabase, ref, onValue } from "firebase/database";
 
 const UserProfile = () => {
-  const data =useSelector((state)=>state.ProfiledData.value)
+  const data = useSelector((state) => state.ProfiledData.value);
   let navigate = useNavigate();
   let [Profieldata, setprofiledata] = useState([]);
   const db = getDatabase();
   console.log(data);
-  
 
   useEffect(() => {
-    
     const userdata = ref(db, "userprofile/");
-    let array = [];
     onValue(userdata, (snapshot) => {
+      let array = [];
       snapshot.forEach((item) => {
         array.push({ ...item.val(), uid: item.key });
       });
