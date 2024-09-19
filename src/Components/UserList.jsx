@@ -1,61 +1,73 @@
 import React, { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
-import { getDatabase, ref, onValue, set, push } from "firebase/database";
+import { getDatabase, ref, onValue, set, push, remove } from "firebase/database";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { RxCross2 } from "react-icons/rx";
 import { ref as dref } from "firebase/database";
 import { useNavigate } from "react-router-dom";
-import UserProfile from "./UserProfile";
 import { userprofilestore } from "../Slices/UserProfile";
 
 const UserList = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const db = getDatabase();
-  const [udata, setUdata] = useState([]);
   const data = useSelector((state) => state.UserData.value);
-  let [requestsend, Setrequestend] = useState([]);
-  let [frienddata, setfrienddata] = useState([]);
-  let dispatch = useDispatch();
+  const dispatch = useDispatch();
+
+  const [users, setUsers] = useState([]);
+  const [friendData, setFriendData] = useState([]);
+  const [requestSent, setRequestSent] = useState([]);
+  const [blockedUsers, setBlockedUsers] = useState([]);
 
   useEffect(() => {
-    const usersdata = ref(db, "users/");
-    const array = [];
-    onValue(usersdata, (snapshot) => {
+    const fetchUsers = ref(db, "users/");
+    onValue(fetchUsers, (snapshot) => {
+      const userArray = [];
       snapshot.forEach((item) => {
         if (data.uid !== item.key) {
-          array.push({ ...item.val(), uid: item.key });
+          userArray.push({ ...item.val(), uid: item.key });
         }
       });
-      setUdata(array);
+      setUsers(userArray);
     });
   }, [data.uid, db]);
 
   useEffect(() => {
-    const usersdata = ref(db, "FriendRequest/");
-    onValue(usersdata, (snapshot) => {
-      const array = [];
+    const fetchFriendData = ref(db, "FriendRequest/");
+    onValue(fetchFriendData, (snapshot) => {
+      const friendArray = [];
       snapshot.forEach((item) => {
-        array.push(item.val().SenderId + item.val().ReciverId);
+        friendArray.push(item.val().SenderId + item.val().ReciverId);
       });
-      setfrienddata(array);
+      setFriendData(friendArray);
     });
-  }, [data.uid, db, navigate]);
+  }, [data.uid, db]);
 
   useEffect(() => {
-    const friendsdata = ref(db, "Friendlist/");
-    onValue(friendsdata, (snapshot) => {
-      const array = [];
+    const fetchRequests = ref(db, "Friendlist/");
+    onValue(fetchRequests, (snapshot) => {
+      const requestsArray = [];
       snapshot.forEach((item) => {
-        array.push(item.val().SenderId + item.val().ReciverId);
+        requestsArray.push(item.val().SenderId + item.val().ReciverId);
       });
-      Setrequestend(array);
+      setRequestSent(requestsArray);
     });
-  }, [data.uid, db, navigate]);
+  }, [data.uid, db]);
 
-  let Handlesendfirendrequest = (item) => {
-    set(push(ref(db, "FriendRequest/")), {
+  useEffect(() => {
+    const fetchBlockedUsers = ref(db, "blocklist/");
+    onValue(fetchBlockedUsers, (snapshot) => {
+      const blockedArray = [];
+      snapshot.forEach((item) => {
+        blockedArray.push(item.val().blockby + item.val().blockuser);
+      });
+      setBlockedUsers(blockedArray);
+    });
+  }, []);
+
+  const handleSendFriendRequest = (item) => {
+    const requestData = {
       SenderId: data.uid,
       SenderName: data.displayName,
       SenderImage: data.photoURL,
@@ -64,16 +76,15 @@ const UserList = () => {
       ReciverName: item.username,
       ReciverImage: item.profile_picture,
       Reciveremail: item.email,
-      Date: `${new Date().getFullYear()}-${
-        new Date().getMonth() + 1
-      }-${new Date().getDate()}-${new Date().getHours()}-${new Date().getMinutes()}-${new Date().getSeconds()}`,
-    }).then(() => {
-      alert("success");
+      Date: moment().format(),
+    };
+    
+    set(push(ref(db, "FriendRequest/")), requestData).then(() => {
+      alert("Friend request sent successfully");
     });
   };
 
-  let Handleshowprofile = (item) => {
-    const db = getDatabase();
+  const handleShowProfile = (item) => {
     set(dref(db, "userprofile/" + item.uid), {
       username: item.username,
       email: item.email,
@@ -83,59 +94,58 @@ const UserList = () => {
       navigate("/Userprofile");
     });
   };
+
+  const HandleDeleterequest =(item)=>{
+    remove(ref(db, "FriendRequest/" + item.uid))
+  }
+
   return (
     <section>
       <div>
         <div className="w-[427px] shadow-xl rounded-[20px] py-4 px-6">
           <div className="flex justify-between items-center">
-            <h3 className="text-lg text-ThirdColor font-semibold font-Nunito">
-              User List
-            </h3>
+            <h3 className="text-lg text-ThirdColor font-semibold font-Nunito">User List</h3>
             <BsThreeDotsVertical className="text-Secondary" />
           </div>
           <div className="w-full h-[451px] overflow-y-scroll cursor-pointer">
-            {udata.map((item, index) => (
-              <div
-                key={index}
-                className="flex justify-between items-center border-b border-black/25 pb-3 mt-4"
-              >
-                <div className="flex gap-3 mt-[17px]">
-                  <img
-                    onClick={() => Handleshowprofile(item)}
-                    src={item.profile_picture}
-                    alt="profile"
-                    className="w-[52px] h-[52px] rounded-full object-cover"
-                  />
-                  <div>
-                    <h3 className="text-sm font-semibold font-Nunito text-ThirdColor">
-                      {item.username}
-                    </h3>
-                    <p className="text-xs font-normal text-FourColor/75 font-Nunito">
-                      {moment(item.Date, "YYYYMMDDhh:mm").fromNow()}
-                    </p>
+            {users.map((user, index) => {
+              const isBlocked = blockedUsers.includes(data.uid + user.uid) || blockedUsers.includes(user.uid + data.uid);
+              const isFriend = friendData.includes(data.uid + user.uid) || friendData.includes(user.uid + data.uid);
+              const isRequestSent = requestSent.includes(data.uid + user.uid) || requestSent.includes(user.uid + data.uid);
+              
+              return (
+                <div key={index} className="flex justify-between items-center border-b border-black/25 pb-3 mt-4">
+                  <div className="flex gap-3 mt-[17px]">
+                    <img
+                      onClick={() => handleShowProfile(user)}
+                      src={user.profile_picture}
+                      alt="profile"
+                      className="w-[52px] h-[52px] rounded-full object-cover"
+                    />
+                    <div>
+                      <h3 className="text-sm font-semibold font-Nunito text-ThirdColor">{user.username}</h3>
+                      <p className="text-xs font-normal text-FourColor/75 font-Nunito">
+                      {moment(user.Date, "YYYYMMDDhh:mm").fromNow()}
+                      </p>
+                    </div>
                   </div>
+                  {isBlocked ? (
+                    <button className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]">Blocked</button>
+                  ) : isFriend ? (
+                    <button onClick={()=>HandleDeleterequest(item)} className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]"><RxCross2 /></button>
+                  ) : isRequestSent ? (
+                    <button className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]">Friend</button>
+                  ) : (
+                    <button
+                      onClick={() => handleSendFriendRequest(user)}
+                      className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]"
+                    >
+                      <FaPlus />
+                    </button>
+                  )}
                 </div>
-
-                {frienddata.includes(data.uid + item.uid) ||
-                frienddata.includes(item.uid + data.uid) ? (
-                  <button className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]">
-                    <RxCross2 />
-                  </button>
-                ) : requestsend.includes(data.uid + item.uid) ||
-                  requestsend.includes(item.uid + data.uid) ? (
-                  <button className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]">
-                    friend
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => Handlesendfirendrequest(item)}
-                    className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]"
-                  >
-                    <FaPlus />
-                  </button>
-                )}
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

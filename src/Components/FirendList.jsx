@@ -4,7 +4,14 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import progileimage from "../assets/mahtab.jpg";
 import Profileimage2 from "../assets/Signin.png";
 import profileimage3 from "../assets/Signup.jpg";
-import { getDatabase, ref, onValue, set, push } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  set,
+  push,
+  remove,
+} from "firebase/database";
 import moment from "moment";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -24,19 +31,42 @@ const FriendList = () => {
           data.uid == item.val().SenderId ||
           data.uid == item.val().ReciverId
         ) {
-          array.push(item.val());
+          array.push({...item.val() ,uid:item.key});
         }
       });
       SetfriendData(array);
     });
-  }, [navigate ,db]);
+  }, [navigate, db]);
 
   let HandleUSerprofile = (item) => {
-    set(ref(db, 'Userprofiledata/'), {
+    set(ref(db, "Userprofiledata/"), {
       ...item,
     }).then(() => {
       navigate("/Userprofile");
     });
+  };
+  let HandleBlock = (item) => {
+    if (data.uid == item.SenderId) {
+      set(push(ref(db, "blocklist/")), {
+        blockby: item.SenderId,
+        blockbyname: item.SenderName,
+        blockuser: item.ReciverId,
+        blockusername: item.ReciverName,
+      }).then(() => {
+        remove(ref(db, "Friendlist/" + item.uid) );
+      });
+      {console.log(item.uid);
+      }
+    } else {
+      set(push(ref(db, "blocklist/")), {
+        blockby: item.ReciverId,
+        blockbyname: item.ReciverName,
+        blockuser: item.SenderId,
+        blockusername: item.SenderName,
+      }).then(()=>{
+        remove(ref(db, "Friendlist/" + item.uid) )
+      });
+    }
   };
 
   return (
@@ -49,7 +79,7 @@ const FriendList = () => {
             </h3>
             <BsThreeDotsVertical className="text-Secondary" />
           </div>
-          <div className="w-full h-[451px] overflow-y-scroll cursor-pointer ">
+          <div className="w-full h-[451px] overflow-y-scroll  cursor-pointer ">
             {FriendData.map((item) => (
               <div className="flex justify-between items-center  border-b border-black/25 pb-6 mt-4">
                 <div className="flex gap-3 mt-[17px]">
@@ -95,9 +125,12 @@ const FriendList = () => {
                     </p>
                   </div>
                 </div>
-                <p className="text-[10px] font-normal font-Nunito text-ThirdColor/50">
-                  Today, 8:56pm
-                </p>
+                <button
+                  onClick={() => HandleBlock(item)}
+                  className="px-3 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]"
+                >
+                  Block
+                </button>
               </div>
             ))}
           </div>
