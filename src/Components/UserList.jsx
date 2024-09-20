@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
-import { getDatabase, ref, onValue, set, push, remove } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  set,
+  push,
+  remove,
+} from "firebase/database";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { RxCross2 } from "react-icons/rx";
 import { ref as dref } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import { userprofilestore } from "../Slices/UserProfile";
+import { Slide, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UserList = () => {
   const navigate = useNavigate();
@@ -78,9 +87,32 @@ const UserList = () => {
       Reciveremail: item.email,
       Date: moment().format(),
     };
-    
+
     set(push(ref(db, "FriendRequest/")), requestData).then(() => {
-      alert("Friend request sent successfully");
+      toast.success("Friend Request Success", {
+        position: "top-center",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Slide,
+      })
+        
+      }).catch(()=>{
+        toast.error('🦄 Wow so easy!', {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Slide,
+          });
     });
   };
 
@@ -95,26 +127,37 @@ const UserList = () => {
     });
   };
 
-  const HandleDeleterequest =(item)=>{
-    remove(ref(db, "FriendRequest/" + item.uid))
-  }
+  const HandleDeleterequest = (item) => {
+    remove(ref(db, "FriendRequest/" + item.uid));
+  };
 
   return (
     <section>
       <div>
         <div className="w-[427px] shadow-xl rounded-[20px] py-4 px-6">
           <div className="flex justify-between items-center">
-            <h3 className="text-lg text-ThirdColor font-semibold font-Nunito">User List</h3>
+            <h3 className="text-lg text-ThirdColor font-semibold font-Nunito">
+              User List
+            </h3>
             <BsThreeDotsVertical className="text-Secondary" />
           </div>
           <div className="w-full h-[451px] overflow-y-scroll cursor-pointer">
             {users.map((user, index) => {
-              const isBlocked = blockedUsers.includes(data.uid + user.uid) || blockedUsers.includes(user.uid + data.uid);
-              const isFriend = friendData.includes(data.uid + user.uid) || friendData.includes(user.uid + data.uid);
-              const isRequestSent = requestSent.includes(data.uid + user.uid) || requestSent.includes(user.uid + data.uid);
-              
+              const isBlocked =
+                blockedUsers.includes(data.uid + user.uid) ||
+                blockedUsers.includes(user.uid + data.uid);
+              const isFriend =
+                friendData.includes(data.uid + user.uid) ||
+                friendData.includes(user.uid + data.uid);
+              const isRequestSent =
+                requestSent.includes(data.uid + user.uid) ||
+                requestSent.includes(user.uid + data.uid);
+
               return (
-                <div key={index} className="flex justify-between items-center border-b border-black/25 pb-3 mt-4">
+                <div
+                  key={index}
+                  className="flex justify-between items-center border-b border-black/25 pb-3 mt-4"
+                >
                   <div className="flex gap-3 mt-[17px]">
                     <img
                       onClick={() => handleShowProfile(user)}
@@ -123,18 +166,29 @@ const UserList = () => {
                       className="w-[52px] h-[52px] rounded-full object-cover"
                     />
                     <div>
-                      <h3 className="text-sm font-semibold font-Nunito text-ThirdColor">{user.username}</h3>
+                      <h3 className="text-sm font-semibold font-Nunito text-ThirdColor">
+                        {user.username}
+                      </h3>
                       <p className="text-xs font-normal text-FourColor/75 font-Nunito">
-                      {moment(user.Date, "YYYYMMDDhh:mm").fromNow()}
+                        {moment(user.Date, "YYYYMMDDhh:mm").fromNow()}
                       </p>
                     </div>
                   </div>
                   {isBlocked ? (
-                    <button className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]">Blocked</button>
+                    <button className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]">
+                      Blocked
+                    </button>
                   ) : isFriend ? (
-                    <button onClick={()=>HandleDeleterequest(item)} className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]"><RxCross2 /></button>
+                    <button
+                      onClick={() => HandleDeleterequest(item)}
+                      className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]"
+                    >
+                      <RxCross2 />
+                    </button>
                   ) : isRequestSent ? (
-                    <button className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]">Friend</button>
+                    <button className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]">
+                      Friend
+                    </button>
                   ) : (
                     <button
                       onClick={() => handleSendFriendRequest(user)}
@@ -147,6 +201,19 @@ const UserList = () => {
               );
             })}
           </div>
+          <ToastContainer
+            position="top-center"
+            autoClose={1500}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+            transition:Slide
+          />
         </div>
       </div>
     </section>
