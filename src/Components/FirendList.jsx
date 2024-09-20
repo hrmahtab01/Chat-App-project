@@ -31,7 +31,7 @@ const FriendList = () => {
           data.uid == item.val().SenderId ||
           data.uid == item.val().ReciverId
         ) {
-          array.push({...item.val() ,uid:item.key});
+          array.push({ ...item.val(), uid: item.key });
         }
       });
       SetfriendData(array);
@@ -50,21 +50,30 @@ const FriendList = () => {
       set(push(ref(db, "blocklist/")), {
         blockby: item.SenderId,
         blockbyname: item.SenderName,
+        blcokbyimage:item.SenderImage,
+        blockbyemail:item.Senderemail,
         blockuser: item.ReciverId,
         blockusername: item.ReciverName,
+        blockuserimage:item.ReciverImage,
+        blockuseremail:item.Reciveremail
+
       }).then(() => {
-        remove(ref(db, "Friendlist/" + item.uid) );
+        remove(ref(db, "Friendlist/" + item.uid));
       });
-      {console.log(item.uid);
+      {
       }
     } else {
       set(push(ref(db, "blocklist/")), {
         blockby: item.ReciverId,
         blockbyname: item.ReciverName,
+        blcokbyimage:item.ReciverImage,
+        blockbyemail:item.Reciveremail,
         blockuser: item.SenderId,
         blockusername: item.SenderName,
-      }).then(()=>{
-        remove(ref(db, "Friendlist/" + item.uid) )
+        blockuserimage:item.SenderImage,
+        blockuseremail:item.Senderemail
+      }).then(() => {
+        remove(ref(db, "Friendlist/" + item.uid));
       });
     }
   };
