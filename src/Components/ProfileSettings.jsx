@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAuth, updateProfile } from "firebase/auth";
 import { UserDataStore } from "../Slices/UserDataSlice";
 import { getDatabase, ref as dref, update } from "firebase/database";
+import {  ref as sref, onValue } from "firebase/database";
+
 
 const ProfileSettings = () => {
   const db = getDatabase();
@@ -17,6 +19,7 @@ const ProfileSettings = () => {
   let dispatch = useDispatch();
   let [status, Setstatus] = useState(false);
   let [statusData, SetstatusData] = useState("");
+  const [statumaindata ,setstatusmaindata]=useState([])
 
   const handleNameUpdate = () => {
     setIsEditingName(true);
@@ -24,7 +27,7 @@ const ProfileSettings = () => {
 
   const handleNameChange = (e) => {
     setNewName(e.target.value);
-  };  
+  };
 
   const handleChangeSubmit = () => {
     if (newName.trim()) {
@@ -51,7 +54,17 @@ const ProfileSettings = () => {
     Setstatus(true);
   };
   let HandleStatusSubmit = () => {
-    SetstatusData(statusData);
+    updateProfile(auth.currentUser, {
+      status: statusData,
+    })
+      .then(() => {
+        update(dref(db, "users/" + data.uid), {
+          status: statusData,
+        }).then(() => {
+          Setstatus(false);
+        });
+      })
+      .catch((error) => {});
   };
   let HandleChangeStatusData = (e) => {
     SetstatusData(e.target.value);
@@ -59,6 +72,19 @@ const ProfileSettings = () => {
   let HandleStatuscancel = () => {
     Setstatus(false);
   };
+
+  useEffect(()=>{
+    const statusvalue = sref(db, 'users/' );
+    onValue(statusvalue, (snapshot) => {
+      let statusarray =[] 
+     snapshot.forEach((item)=>{
+      if (data.uid == item.key) {
+           statusarray.push(item.val().status)
+      }
+     })
+     setstatusmaindata(statusarray)
+    });
+  },[])
 
   return (
     <div className="w-full h-[750px] shadow-md rounded-[16px] py-7 px-7">
@@ -76,9 +102,14 @@ const ProfileSettings = () => {
             <h3 className="font-semibold text-[25px] text-ThirdColor font-Nunito">
               {data?.displayName}
             </h3>
-            <p className="font-normal font-Nunito text-xl text-ThirdColor">
-              joyyy bangla
+            {statumaindata.map((item)=>(
+
+            <p className="font-normal font-Nunito text-xl text-ThirdColor" key={item}>
+              {item}
             </p>
+            )
+
+            )}
           </div>
         </div>
         <ul className="flex flex-col gap-9 pl-8 mt-11">
