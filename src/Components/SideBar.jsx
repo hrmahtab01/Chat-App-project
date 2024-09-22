@@ -26,7 +26,7 @@ const SideBar = () => {
   const storage = getStorage();
   const auth = getAuth();
   const navigate = useNavigate();
-  const [activesection, setActivesection] = useState(null);
+  const [activesection, setActivesection] = useState("home");
   const data = useSelector((state) => state.UserData.value);
   let [ImageUpdateModal, SetimageUpdateModal] = useState(false);
   let [Loader, setloader] = useState(false);
@@ -45,9 +45,6 @@ const SideBar = () => {
     } else if (activesection === "Settings") {
       navigate("/settings");
     } else if (activesection === "exit") {
-      // setTimeout(() => {
-      //   navigate("/Login");
-      // }, 1500);
     }
   }, [activesection, navigate]);
   let handleSignout = () => {

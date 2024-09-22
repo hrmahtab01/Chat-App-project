@@ -17,7 +17,7 @@ const MyGroup = () => {
             <BsThreeDotsVertical className="text-Secondary" />
           </div>
 
-          <div className="w-full h-[347px] overflow-y-scroll cursor-pointer ">
+          <div className="w-full h-[300px] overflow-y-scroll cursor-pointer ">
             <div className="flex justify-between items-center  border-b border-black/25 pb-6 mt-4">
               <div className="flex gap-3 mt-[17px]">
                 <img

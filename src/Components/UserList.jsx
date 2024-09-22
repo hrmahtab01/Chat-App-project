@@ -141,7 +141,7 @@ const UserList = () => {
             </h3>
             <BsThreeDotsVertical className="text-Secondary" />
           </div>
-          <div className="w-full h-[451px] overflow-y-scroll cursor-pointer">
+          <div className="w-full h-[404px] overflow-y-scroll cursor-pointer">
             {users.map((user, index) => {
               const isBlocked =
                 blockedUsers.includes(data.uid + user.uid) ||
@@ -175,13 +175,13 @@ const UserList = () => {
                     </div>
                   </div>
                   {isBlocked ? (
-                    <button className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]">
+                    <button className="px-2 py-2 bg-[#E50000] font-semibold font-Nunito text-[#fff] rounded-[5px]">
                       Blocked
                     </button>
                   ) : isFriend ? (
                     <button
                       onClick={() => HandleDeleterequest(item)}
-                      className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]"
+                      className="px-2 py-2 bg-[#E50000] font-semibold font-Nunito text-[#fff] rounded-[5px]"
                     >
                       <RxCross2 />
                     </button>

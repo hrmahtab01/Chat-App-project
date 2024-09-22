@@ -88,7 +88,7 @@ const FriendList = () => {
             </h3>
             <BsThreeDotsVertical className="text-Secondary" />
           </div>
-          <div className="w-full h-[451px] overflow-y-scroll  cursor-pointer ">
+          <div className="w-full h-[404px] overflow-y-scroll  cursor-pointer ">
             {FriendData.map((item) => (
               <div className="flex justify-between items-center  border-b border-black/25 pb-6 mt-4">
                 <div className="flex gap-3 mt-[17px]">

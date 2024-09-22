@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { getDatabase, ref, onValue, set, push, remove } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  set,
+  push,
+  remove,
+} from "firebase/database";
 import { useSelector } from "react-redux";
 import moment from "moment";
 
@@ -27,7 +34,7 @@ const BlockUser = () => {
       setLoading(false);
     });
 
-    return () => unsubscribe(); // Cleanup listener on unmount
+    return () => unsubscribe();
   }, [db, userData.uid]);
 
   const handleUnblock = (item) => {
@@ -41,11 +48,10 @@ const BlockUser = () => {
       ReciverImage: item.blockuserimage,
       Reciveremail: item.blockuseremail,
       Date: moment().format(),
-    }).then(()=>{
-      remove(ref(db, "blocklist/" +item.key))
-    })
+    }).then(() => {
+      remove(ref(db, "blocklist/" + item.key));
+    });
   };
-
 
   return (
     <section>
@@ -57,7 +63,7 @@ const BlockUser = () => {
           <BsThreeDotsVertical className="text-Secondary" />
         </div>
 
-        <div className="w-full h-[347px] overflow-y-scroll cursor-pointer">
+        <div className="w-full h-[300px] overflow-y-scroll cursor-pointer">
           {blockedUsers.map((item) => (
             <div
               key={item.key}

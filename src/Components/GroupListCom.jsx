@@ -28,7 +28,7 @@ const GroupListCom = () => {
             <BsThreeDotsVertical className="text-Secondary" />
           </div>
 
-          <div className="w-full h-[347px] overflow-y-scroll cursor-pointer ">
+          <div className="w-full h-[300px] overflow-y-scroll cursor-pointer ">
             <div className="flex justify-between items-center  border-b border-black/25 pb-3 mt-4">
               <div className="flex gap-3 mt-[17px]">
                 <img
@@ -45,7 +45,7 @@ const GroupListCom = () => {
                   </p>
                 </div>
               </div>
-              <button className="px-5 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px] ">
+              <button className="px-4 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px] ">
              Join
                 </button>
             </div>
@@ -63,7 +63,7 @@ const GroupListCom = () => {
                   <p className="text-sm font-medium text-FourColor font-Nunito">Good to see you.</p>
                 </div>
               </div>
-              <button className="px-5 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px] ">
+              <button className="px-4 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px] ">
              Join
                 </button>
             </div>
@@ -83,7 +83,7 @@ const GroupListCom = () => {
                   </p>
                 </div>
               </div>
-              <button className="px-5 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px] ">
+              <button className="px-4 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px] ">
              Join
                 </button>
             </div>
@@ -103,7 +103,7 @@ const GroupListCom = () => {
                   </p>
                 </div>
               </div>
-              <button className="px-5 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px] ">
+              <button className="px-4 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px] ">
              Join
                 </button>
             </div>
@@ -123,7 +123,7 @@ const GroupListCom = () => {
                   </p>
                 </div>
               </div>
-              <button className="px-5 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px] ">
+              <button className="px-4 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px] ">
              Join
                 </button>
             </div>
