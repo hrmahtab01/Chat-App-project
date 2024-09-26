@@ -17,17 +17,18 @@ import { useNavigate } from "react-router-dom";
 import { userprofilestore } from "../Slices/UserProfile";
 import { Slide, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { CiSearch } from "react-icons/ci";
 
 const UserList = () => {
   const navigate = useNavigate();
   const db = getDatabase();
   const data = useSelector((state) => state.UserData.value);
   const dispatch = useDispatch();
-
   const [users, setUsers] = useState([]);
   const [friendData, setFriendData] = useState([]);
   const [requestSent, setRequestSent] = useState([]);
   const [blockedUsers, setBlockedUsers] = useState([]);
+  const [srcUser, Setsrcuser] = useState([]);
 
   useEffect(() => {
     const fetchUsers = ref(db, "users/");
@@ -88,21 +89,22 @@ const UserList = () => {
       Date: moment().format(),
     };
 
-    set(push(ref(db, "FriendRequest/")), requestData).then(() => {
-      toast.success("Friend Request Success", {
-        position: "top-center",
-        autoClose: 1500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Slide,
+    set(push(ref(db, "FriendRequest/")), requestData)
+      .then(() => {
+        toast.success("Friend Request Success", {
+          position: "top-center",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Slide,
+        });
       })
-        
-      }).catch(()=>{
-        toast.error('🦄 Wow so easy!', {
+      .catch(() => {
+        toast.error("🦄 Wow so easy!", {
           position: "top-right",
           autoClose: 1500,
           hideProgressBar: false,
@@ -112,8 +114,8 @@ const UserList = () => {
           progress: undefined,
           theme: "light",
           transition: Slide,
-          });
-    });
+        });
+      });
   };
 
   const handleShowProfile = (item) => {
@@ -131,75 +133,151 @@ const UserList = () => {
     remove(ref(db, "FriendRequest/" + item.uid));
   };
 
+  const HandlesrcUser = (e) => {
+    let Sreach = users.filter((item) => item.username.toLowerCase().includes(e.target.value.toLowerCase()));
+    Setsrcuser(Sreach);
+  };
+  console.log(srcUser);
+  
+
   return (
     <section>
       <div>
-        <div className="w-[427px] shadow-xl rounded-[20px] py-4 px-6">
+        <div className="w-[427px]  relative h-[59px] ">
+          <input
+            onChange={HandlesrcUser}
+            type="text"
+            placeholder="Search"
+            className=" w-full h-full shadow-lg rounded-[20px] placeholder:absolute placeholder:top-2/4 placeholder:left-14 placeholder:translate-y-[-50%] outline-none type pl-16"
+          />
+          <CiSearch className="absolute top-2/4 left-4 translate-y-[-50%] text-[19px] text-ThirdColor font-bold" />
+          <BsThreeDotsVertical className="absolute right-0 top-2/4  translate-y-[-50%] text-Secondary text-lg" />
+        </div>
+        <div className="w-[427px] shadow-xl rounded-[20px] py-4 px-6 mt-[43px] ">
           <div className="flex justify-between items-center">
             <h3 className="text-lg text-ThirdColor font-semibold font-Nunito">
               User List
             </h3>
             <BsThreeDotsVertical className="text-Secondary" />
           </div>
-          <div className="w-full h-[404px] overflow-y-scroll cursor-pointer">
-            {users.map((user, index) => {
-              const isBlocked =
-                blockedUsers.includes(data.uid + user.uid) ||
-                blockedUsers.includes(user.uid + data.uid);
-              const isFriend =
-                friendData.includes(data.uid + user.uid) ||
-                friendData.includes(user.uid + data.uid);
-              const isRequestSent =
-                requestSent.includes(data.uid + user.uid) ||
-                requestSent.includes(user.uid + data.uid);
+          <div className="w-full h-[300px] overflow-y-scroll cursor-pointer ">
+            {srcUser.length > 0  ?
+              srcUser.map((user, index) => {
+                  const isBlocked =
+                    blockedUsers.includes(data.uid + user.uid) ||
+                    blockedUsers.includes(user.uid + data.uid);
+                  const isFriend =
+                    friendData.includes(data.uid + user.uid) ||
+                    friendData.includes(user.uid + data.uid);
+                  const isRequestSent =
+                    requestSent.includes(data.uid + user.uid) ||
+                    requestSent.includes(user.uid + data.uid);
 
-              return (
-                <div
-                  key={index}
-                  className="flex justify-between items-center border-b border-black/25 pb-3 mt-4"
-                >
-                  <div className="flex gap-3 mt-[17px]">
-                    <img
-                      onClick={() => handleShowProfile(user)}
-                      src={user.profile_picture}
-                      alt="profile"
-                      className="w-[52px] h-[52px] rounded-full object-cover"
-                    />
-                    <div>
-                      <h3 className="text-sm font-semibold font-Nunito text-ThirdColor">
-                        {user.username}
-                      </h3>
-                      <p className="text-xs font-normal text-FourColor/75 font-Nunito">
-                        {moment(user.Date, "YYYYMMDDhh:mm").fromNow()}
-                      </p>
+                  return (
+                    <div
+                      key={index}
+                      className="flex justify-between items-center border-b border-black/25 pb-3 mt-4"
+                    >
+                      <div className="flex gap-3 mt-[17px]">
+                        <img
+                          onClick={() => handleShowProfile(user)}
+                          src={user.profile_picture}
+                          alt="profile"
+                          className="w-[52px] h-[52px] rounded-full object-cover"
+                        />
+                        <div>
+                          <h3 className="text-sm font-semibold font-Nunito text-ThirdColor">
+                            {user.username}
+                          </h3>
+                          <p className="text-xs font-normal text-FourColor/75 font-Nunito">
+                            {moment(user.Date, "YYYYMMDDhh:mm").fromNow()}
+                          </p>
+                        </div>
+                      </div>
+                      {isBlocked ? (
+                        <button className="px-2 py-2 bg-[#E50000] font-semibold font-Nunito text-[#fff] rounded-[5px]">
+                          Blocked
+                        </button>
+                      ) : isFriend ? (
+                        <button
+                          onClick={() => HandleDeleterequest(item)}
+                          className="px-2 py-2 bg-[#E50000] font-semibold font-Nunito text-[#fff] rounded-[5px]"
+                        >
+                          <RxCross2 />
+                        </button>
+                      ) : isRequestSent ? (
+                        <button className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]">
+                          Friend
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleSendFriendRequest(user)}
+                          className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]"
+                        >
+                          <FaPlus />
+                        </button>
+                      )}
                     </div>
-                  </div>
-                  {isBlocked ? (
-                    <button className="px-2 py-2 bg-[#E50000] font-semibold font-Nunito text-[#fff] rounded-[5px]">
-                      Blocked
-                    </button>
-                  ) : isFriend ? (
-                    <button
-                      onClick={() => HandleDeleterequest(item)}
-                      className="px-2 py-2 bg-[#E50000] font-semibold font-Nunito text-[#fff] rounded-[5px]"
+                  );
+                })
+              : users.map((user, index) => {
+                  const isBlocked =
+                    blockedUsers.includes(data.uid + user.uid) ||
+                    blockedUsers.includes(user.uid + data.uid);
+                  const isFriend =
+                    friendData.includes(data.uid + user.uid) ||
+                    friendData.includes(user.uid + data.uid);
+                  const isRequestSent =
+                    requestSent.includes(data.uid + user.uid) ||
+                    requestSent.includes(user.uid + data.uid);
+
+                  return (
+                    <div
+                      key={index}
+                      className="flex justify-between items-center border-b border-black/25 pb-3 mt-4"
                     >
-                      <RxCross2 />
-                    </button>
-                  ) : isRequestSent ? (
-                    <button className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]">
-                      Friend
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => handleSendFriendRequest(user)}
-                      className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]"
-                    >
-                      <FaPlus />
-                    </button>
-                  )}
-                </div>
-              );
-            })}
+                      <div className="flex gap-3 mt-[17px]">
+                        <img
+                          onClick={() => handleShowProfile(user)}
+                          src={user.profile_picture}
+                          alt="profile"
+                          className="w-[52px] h-[52px] rounded-full object-cover"
+                        />
+                        <div>
+                          <h3 className="text-sm font-semibold font-Nunito text-ThirdColor">
+                            {user.username}
+                          </h3>
+                          <p className="text-xs font-normal text-FourColor/75 font-Nunito">
+                            {moment(user.Date, "YYYYMMDDhh:mm").fromNow()}
+                          </p>
+                        </div>
+                      </div>
+                      {isBlocked ? (
+                        <button className="px-2 py-2 bg-[#E50000] font-semibold font-Nunito text-[#fff] rounded-[5px]">
+                          Blocked
+                        </button>
+                      ) : isFriend ? (
+                        <button
+                          onClick={() => HandleDeleterequest(item)}
+                          className="px-2 py-2 bg-[#E50000] font-semibold font-Nunito text-[#fff] rounded-[5px]"
+                        >
+                          <RxCross2 />
+                        </button>
+                      ) : isRequestSent ? (
+                        <button className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]">
+                          Friend
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleSendFriendRequest(user)}
+                          className="px-2 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]"
+                        >
+                          <FaPlus />
+                        </button>
+                      )}
+                    </div>
+                  );
+                })}
           </div>
           <ToastContainer
             position="top-center"

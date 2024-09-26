@@ -113,7 +113,7 @@ const Signup = () => {
       .then(() => {
         setTimeout(() => {
           navigate("/");
-        }, 3000);
+        }, 2000);
       })
 
       .catch((error) => {

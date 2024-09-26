@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import progileimage from "../assets/mahtab.jpg";
-import Profileimage2 from "../assets/Signin.png";
-import profileimage3 from "../assets/Signup.jpg";
+
 import {
   getDatabase,
   ref,
@@ -81,14 +79,14 @@ const FriendList = () => {
   return (
     <section>
       <div className="  ">
-        <div className="w-[427px] shadow-xl rounded-[20px]  py-4 px-6 ">
+        <div className="w-[427px] shadow-xl rounded-[20px]  py-4 px-6  ">
           <div className="flex justify-between items-center">
             <h3 className="text-lg text-ThirdColor font-semibold font-Nunito">
               Friends
             </h3>
             <BsThreeDotsVertical className="text-Secondary" />
           </div>
-          <div className="w-full h-[404px] overflow-y-scroll  cursor-pointer ">
+          <div className="w-full h-[404px] overflow-y-scroll  cursor-pointer  ">
             {FriendData.map((item) => (
               <div className="flex justify-between items-center  border-b border-black/25 pb-6 mt-4">
                 <div className="flex gap-3 mt-[17px]">
