@@ -38,17 +38,20 @@ const MyGroup = () => {
             {groupData.map((item) => (
               <div key={item.id} className="flex justify-between items-center border-b border-black/25 pb-6 mt-4">
                 <div className="flex gap-3 mt-[17px]">
+                  <div>
+
                   <img
                     src={ProfileImage}
                     alt="Profile"
-                    className="w-[52px] h-[52px] rounded-full object-cover"
+                    className="w-[52px] h-[52px] rounded-full object-cover "
                   />
+                  </div>
                   <div>
                     <h3 className="text-lg font-semibold font-Nunito text-ThirdColor">
                       {item.groupName}
                     </h3>
                     <p className=" text-base font-medium text-FourColor font-Nunito">
-                    Created by : <span className="text-xs font-normal text-FourColor/75">{item.AdminName}</span>
+                    Created by : <span className="text-base font-normal text-FourColor/75">{item.AdminName}</span>
                     </p>
                   </div>
                 </div>

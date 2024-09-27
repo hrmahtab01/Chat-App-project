@@ -173,7 +173,7 @@ const SideBar = () => {
               />
               <div
                 onClick={HandlechangeImage}
-                className="w-full h-full bg-[#000]/50 absolute top-0 left-0 flex opacity-0 justify-center items-center group-hover:opacity-100 duration-300"
+                className="w-full h-full bg-[#000]/50 absolute top-0 left-0 flex opacity-0 justify-center items-center group-hover:opacity-100 duration-300 cursor-pointer"
               >
                 <TbCameraPlus className="text-[#fff] text-2xl " />
               </div>
@@ -183,7 +183,7 @@ const SideBar = () => {
             </h2>
           </div>
           <div
-            className="w-full h-[89px] relative mt-[60px] after:contents-[''] after:w-[8px] after:h-full after:bg-Secondary after:absolute after:top-0 after:right-0 after:rounded-s-[25px] after:shadow-md"
+            className="w-full h-[89px] relative mt-[60px] cursor-pointer after:contents-[''] after:w-[8px] after:h-full after:bg-Secondary after:absolute after:top-0 after:right-0 after:rounded-s-[25px] after:shadow-md"
             onClick={() => setActivesection("home")}
           >
             <div
@@ -198,7 +198,7 @@ const SideBar = () => {
             />
           </div>
           <div
-            className="w-full h-[89px] relative mt-[35px] after:contents-[''] after:w-[8px] after:h-full after:bg-Secondary after:absolute after:top-0 after:right-0 after:rounded-s-[25px] after:shadow-md"
+            className="w-full h-[89px] cursor-pointer relative mt-[35px] after:contents-[''] after:w-[8px] after:h-full after:bg-Secondary after:absolute after:top-0 after:right-0 after:rounded-s-[25px] after:shadow-md "
             onClick={() => setActivesection("message")}
           >
             <div
@@ -213,7 +213,7 @@ const SideBar = () => {
             />
           </div>
           <div
-            className="w-full h-[89px] relative mt-[35px] after:contents-[''] after:w-[8px] after:h-full after:bg-Secondary after:absolute after:top-0 after:right-0 after:rounded-s-[25px] after:shadow-md"
+            className="w-full h-[89px] cursor-pointer relative mt-[35px] after:contents-[''] after:w-[8px] after:h-full after:bg-Secondary after:absolute after:top-0 after:right-0 after:rounded-s-[25px] after:shadow-md"
             onClick={() => setActivesection("notification")}
           >
             <div
@@ -230,7 +230,7 @@ const SideBar = () => {
             />
           </div>
           <div
-            className="w-full h-[89px] relative mt-[35px] after:contents-[''] after:w-[8px] after:h-full after:bg-Secondary after:absolute after:top-0 after:right-0 after:rounded-s-[25px] after:shadow-md "
+            className="w-full h-[89px] cursor-pointer relative mt-[35px] after:contents-[''] after:w-[8px] after:h-full after:bg-Secondary after:absolute after:top-0 after:right-0 after:rounded-s-[25px] after:shadow-md "
             onClick={() => setActivesection("Settings")}
           >
             <div

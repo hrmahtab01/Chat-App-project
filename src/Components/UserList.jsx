@@ -137,7 +137,7 @@ const UserList = () => {
     let Sreach = users.filter((item) => item.username.toLowerCase().includes(e.target.value.toLowerCase()));
     Setsrcuser(Sreach);
   };
-  console.log(srcUser);
+
   
 
   return (
