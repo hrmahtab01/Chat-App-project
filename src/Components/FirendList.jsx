@@ -11,14 +11,18 @@ import {
   remove,
 } from "firebase/database";
 import moment from "moment";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { chatlistdatastore } from "../Slices/ChatSlice";
 
 const FriendList = () => {
   let navigate = useNavigate();
   let data = useSelector((state) => state.UserData.value);
   const db = getDatabase();
   let [FriendData, SetfriendData] = useState([]);
+  const location = useLocation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const starCountRef = ref(db, "Friendlist/");
@@ -48,13 +52,12 @@ const FriendList = () => {
       set(push(ref(db, "blocklist/")), {
         blockby: item.SenderId,
         blockbyname: item.SenderName,
-        blcokbyimage:item.SenderImage,
-        blockbyemail:item.Senderemail,
+        blcokbyimage: item.SenderImage,
+        blockbyemail: item.Senderemail,
         blockuser: item.ReciverId,
         blockusername: item.ReciverName,
-        blockuserimage:item.ReciverImage,
-        blockuseremail:item.Reciveremail
-
+        blockuserimage: item.ReciverImage,
+        blockuseremail: item.Reciveremail,
       }).then(() => {
         remove(ref(db, "Friendlist/" + item.uid));
       });
@@ -64,15 +67,37 @@ const FriendList = () => {
       set(push(ref(db, "blocklist/")), {
         blockby: item.ReciverId,
         blockbyname: item.ReciverName,
-        blcokbyimage:item.ReciverImage,
-        blockbyemail:item.Reciveremail,
+        blcokbyimage: item.ReciverImage,
+        blockbyemail: item.Reciveremail,
         blockuser: item.SenderId,
         blockusername: item.SenderName,
-        blockuserimage:item.SenderImage,
-        blockuseremail:item.Senderemail
+        blockuserimage: item.SenderImage,
+        blockuseremail: item.Senderemail,
       }).then(() => {
         remove(ref(db, "Friendlist/" + item.uid));
       });
+    }
+  };
+
+  let Handlechat = (item) => {
+    if (data.uid == item.SenderId) {
+      dispatch(
+        chatlistdatastore({
+          userid: item.ReciverId,
+          image: item.ReciverImage,
+          name: item.ReciverName,
+          email: item.Reciveremail,
+        })
+      );
+    } else {
+      dispatch(
+        chatlistdatastore({
+          userid: item.SenderId,
+          image: item.SenderImage,
+          name: item.SenderName,
+          email: item.Senderemail,
+        })
+      );
     }
   };
 
@@ -132,12 +157,21 @@ const FriendList = () => {
                     </p>
                   </div>
                 </div>
-                <button
-                  onClick={() => HandleBlock(item)}
-                  className="px-3 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]"
-                >
-                  Block
-                </button>
+                {location.pathname === "/messageBox" ? (
+                  <button
+                    onClick={() => Handlechat(item)}
+                    className="px-3 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]"
+                  >
+                    Msg
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => HandleBlock(item)}
+                    className="px-3 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]"
+                  >
+                    Block
+                  </button>
+                )}
               </div>
             ))}
           </div>

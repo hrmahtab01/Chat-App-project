@@ -19,6 +19,7 @@ const GroupListCom = () => {
   const [Groupdata, Setgroupdata] = useState([]);
   const [GroupSrcData, SetGroupsrcdata] = useState([]);
   const [groupmodal, SetgroupMOdal] = useState(false);
+  const [Photodata ,Setphotodata]=useState("")
 
   const HandleCreatModal = () => {
     SetCreateModal(!CreateModal);
