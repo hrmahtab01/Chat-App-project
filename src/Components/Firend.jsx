@@ -60,7 +60,7 @@ const Friend = () => {
             <BsThreeDotsVertical className="text-Secondary" />
           </div>
 
-          <div className="w-full h-[300px] overflow-y-scroll cursor-pointer">
+          <div className="w-full h-[300px] overflow-y-scroll cursor-pointer no-scrollbar">
             {firndRequestlist.map((item) => (
               <div className="border-b border-black/25 pb-6 ">
                 <div className="flex justify-between items-center  ">

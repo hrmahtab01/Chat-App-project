@@ -98,7 +98,7 @@ const GroupListCom = () => {
             />
           </div>
 
-          <div className="w-full h-[300px] overflow-y-scroll cursor-pointer relative ">
+          <div className="w-full h-[300px] overflow-y-scroll cursor-pointer relative no-scrollbar ">
             {CreateModal ? (
               <div className="flex flex-col mt-4">
                 <input

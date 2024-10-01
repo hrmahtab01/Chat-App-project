@@ -160,7 +160,7 @@ const UserList = () => {
             </h3>
             <BsThreeDotsVertical className="text-Secondary" />
           </div>
-          <div className="w-full h-[300px] overflow-y-scroll cursor-pointer ">
+          <div className="w-full h-[300px] overflow-y-scroll cursor-pointer no-scrollbar">
             {srcUser.length > 0  ?
               srcUser.map((user, index) => {
                   const isBlocked =

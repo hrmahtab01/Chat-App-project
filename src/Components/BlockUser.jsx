@@ -63,7 +63,7 @@ const BlockUser = () => {
           <BsThreeDotsVertical className="text-Secondary" />
         </div>
 
-        <div className="w-full h-[300px] overflow-y-scroll cursor-pointer">
+        <div className="w-full h-[300px] overflow-y-scroll cursor-pointer no-scrollbar">
           {blockedUsers.map((item) => (
             <div
               key={item.key}
