@@ -76,7 +76,7 @@ const GroupListCom = () => {
   return (
     <section>
       <div className="  ">
-        <div className="w-[427px]  relative h-[59px] ">
+        <div className="lg:w-[427px] w-[370px] relative h-[59px] ">
           <input
             onChange={HandleSreachgrouplist}
             type="text"
@@ -87,7 +87,7 @@ const GroupListCom = () => {
           <BsThreeDotsVertical className="absolute right-0 top-2/4  translate-y-[-50%] text-Secondary text-lg " />
         </div>
 
-        <div className="max-w-[427px] shadow-xl rounded-[20px]  py-4 px-6  mt-[43px]">
+        <div className="lg:w-[427px] w-[370px] shadow-xl rounded-[20px]  py-4 px-6  mt-[43px]">
           <div className="flex justify-between items-center">
             <h3 className="text-lg text-ThirdColor font-semibold font-Nunito">
               Groups List

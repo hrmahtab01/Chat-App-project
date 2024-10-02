@@ -55,7 +55,7 @@ const BlockUser = () => {
 
   return (
     <section>
-      <div className="w-[427px] shadow-xl rounded-[20px] py-4 px-6 mt-[43px]">
+      <div className="lg:w-[427px] w-[370px] shadow-xl rounded-[20px] py-4 px-6 mt-[43px]">
         <div className="flex justify-between items-center">
           <h3 className="text-lg text-ThirdColor font-semibold font-Nunito">
             Blocked Users

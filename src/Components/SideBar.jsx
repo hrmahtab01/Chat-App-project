@@ -162,7 +162,7 @@ const SideBar = () => {
 
   return (
     <>
-      <div className="h-screen py-9 px-8 ">
+      <div className="h-screen py-9 px-8 hidden lg:block ">
         <div className="lg:w-[186px] h-full w-[100px] bg-Secondary rounded-3xl">
           <div className="text-center pt-9">
             <div className="w-[100px] h-[100px] rounded-full overflow-hidden mx-auto relative group">
@@ -337,6 +337,11 @@ const SideBar = () => {
             </div>
           </div>
         )}
+      </div>
+      <div className="flex fixed top-0 left-0 z-50 w-full bg-lal h-[40px] lg:hidden shadow-lg  rounded-sm">
+        <div className="  ">
+          <h1>hasibur rahman mahtab</h1>
+        </div>
       </div>
     </>
   );
