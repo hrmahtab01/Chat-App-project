@@ -6,7 +6,7 @@ import AccountSettings from "./AccountSettings";
 
 const SettingsCom = () => {
   return (
-    <div className="w-full px-10">
+    <div className="w-full lg:px-10 lg:mt-0 mt-7">
       <div className="w-full  relative h-[59px] my-9 ">
         <input
           type="text"
@@ -16,7 +16,7 @@ const SettingsCom = () => {
         <CiSearch className="absolute top-2/4 left-4 translate-y-[-50%] text-[19px] text-ThirdColor font-bold" />
         <BsThreeDotsVertical className="absolute right-0 top-2/4  translate-y-[-50%] text-Secondary text-lg" />
       </div>
-      <div className="flex gap-9">
+      <div className="gap-9 grid grid-cols-1 lg:grid-cols-2">
         <ProfileSettings />
         <AccountSettings />
       </div>

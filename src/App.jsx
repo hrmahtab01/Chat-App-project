@@ -15,6 +15,7 @@ import MessageBox from "./Components/MessageBox";
 import SettingsCom from "./Components/SettingsCom";
 import UserProfile from "./Components/UserProfile";
 import UserprofilePhoto from "./Components/UserprofilePhoto";
+import ChatComponent from "./Components/ChatComponent";
 
 const App = () => {
   let router = createBrowserRouter(
@@ -29,6 +30,7 @@ const App = () => {
           <Route path="/settings" element={<SettingsCom />}></Route>
           <Route path="/Userprofile" element={<UserProfile/>}/>
           <Route path="Profilephoto" element={<UserprofilePhoto/>}/>
+          <Route path="/chat" element={<ChatComponent/>}/>
         </Route>
         ,
       </>,

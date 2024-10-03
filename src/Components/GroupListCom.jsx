@@ -33,6 +33,7 @@ const GroupListCom = () => {
     set(push(ref(db, "grouplist/")), {
       groupName: Groupname,
       AdminName: data.displayName,
+      adminid:data.uid,
     })
       .then(() => {
         setloader(true);

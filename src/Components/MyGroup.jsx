@@ -9,13 +9,15 @@ const MyGroup = () => {
   const [groupData, setGroupData] = useState([]);
   const db = getDatabase();
   const data = useSelector((state) => state.UserData.value);
+  console.log(data);
+  
 
   useEffect(() => {
     const groupRef = ref(db, "grouplist/");
     onValue(groupRef, (snapshot) => {
       const groupArray = [];
       snapshot.forEach((item) => {
-        if (data.displayName === item.val().AdminName) {
+        if (data.uid === item.val().adminid) {
           groupArray.push(item.val());
         }
       });
@@ -51,7 +53,7 @@ const MyGroup = () => {
                       {item.groupName}
                     </h3>
                     <p className=" text-base font-medium text-FourColor font-Nunito">
-                    Created by : <span className="text-base font-normal text-FourColor/75">{item.AdminName}</span>
+                    Created by : <span className="text-base font-normal text-FourColor/75">{data.displayName}</span>
                     </p>
                   </div>
                 </div>

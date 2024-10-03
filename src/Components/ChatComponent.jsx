@@ -18,6 +18,7 @@ const ChatComponent = () => {
   const [chatuserdata, Setchatuserdata] = useState([]);
   const [emojipiker, Setemojipiker] = useState(false);
   const scroller =useRef(null)
+  
 
   let HandleChating = (e) => {
     Setchat(e.target.value);
@@ -68,9 +69,10 @@ const ChatComponent = () => {
       inline: "nearest",
     });
   }, [chatuserdata]);
+  
 
   return (
-    <div className="w-[1000px] pb-8 h-[850px]  shadow-md rounded-[16px] px-8 relative  ">
+    <div className="lg:w-[1000px] w-full pb-8 lg:h-[850px] max-h-screen mt-8 lg:mt-0  shadow-md rounded-[16px] px-8 relative  ">
       <div className="flex justify-between items-center  border-b border-black/25 pb-6 mt-4 relative ">
         <div className="flex gap-3  relative">
           <img
@@ -88,7 +90,7 @@ const ChatComponent = () => {
         </div>
         <BsThreeDotsVertical />
       </div>
-      <div  className=" w-full h-[600px] overflow-y-scroll no-scroll no-scrollbar  ">
+      <div  className=" w-full lg:h-[600px] h-[450px] mb-10 overflow-y-scroll no-scroll no-scrollbar  ">
         <div className="relative overflow-hidden">
           {chatuserdata.map((item) =>
             data.uid == item.reciverid ? (
@@ -121,24 +123,24 @@ const ChatComponent = () => {
           )}
         </div>
       </div>
-      <div className="mt-[25px] flex justify-center gap-5 absolute bottom-3 right-60 border-t border-ThirdColor/25 pt-7 ">
-        <div className="w-[530px] h-[45px] relative px-10 ">
+      <div className="mt-[25px] flex justify-center gap-5 absolute lg:bottom-3 lg:right-60 right-5 bottom-0 border-t border-ThirdColor/25 pt-7 ">
+        <div className="lg:w-[530px] w-[330px] h-[45px] relative px-10  ">
           <input
             onChange={HandleChating}
             value={chat}
-            className=" w-[500px] h-full bg-[#F1F1F1] rounded-[10px] text-xl pl-4 pr-20 "
+            className=" lg:w-[500px] w-[310px] h-full bg-[#F1F1F1] rounded-[10px] text-xl pl-4 lg:pr-20 pr-14   "
             type="text"
           />
           <MdEmojiEmotions
             onClick={() => Setemojipiker(!emojipiker)}
-            className="absolute top-[50%] right-10 translate-y-[-50%] text-Secondary text-lg cursor-pointer "
+            className="absolute top-[50%] right-5 lg:right-10 translate-y-[-50%] text-Secondary text-lg cursor-pointer "
           />
 
-          <FaCamera className="absolute top-[50%] right-4 translate-y-[-50%] text-Secondary text-base cursor-pointer  " />
+          <FaCamera className="absolute top-[50%] right-0 lg:right-4 translate-y-[-50%] text-Secondary text-base cursor-pointer  " />
         </div>
         <div
           onClick={HandleChatSubmit} 
-          className="py-[10px] px-[10px] bg-Secondary rounded-[10px]"
+          className="py-[10px] px-[10px]  bg-Secondary rounded-[10px] lg:ml-0 "
         >
           <IoIosSend className=" text-[#fff] text-2xl" />
         </div>

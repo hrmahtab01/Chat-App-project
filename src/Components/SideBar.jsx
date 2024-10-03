@@ -4,7 +4,7 @@ import { AiOutlineMessage } from "react-icons/ai";
 import { IoNotificationsOutline, IoSettingsOutline } from "react-icons/io5";
 import { ImExit } from "react-icons/im";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { TbCameraPlus } from "react-icons/tb";
 import { Bounce, Slide, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,6 +20,10 @@ import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { UserDataStore } from "../Slices/UserDataSlice";
 import { getDatabase, ref as dref, update } from "firebase/database";
+import { FaFacebookMessenger } from "react-icons/fa6";
+import { IoNotifications } from "react-icons/io5";
+import { IoMdSettings } from "react-icons/io";
+import demoimage from "../assets/mahtab.jpg";
 
 const SideBar = () => {
   const db = getDatabase();
@@ -34,6 +38,7 @@ const SideBar = () => {
   const [cropData, setCropData] = useState("");
   const cropperRef = createRef();
   let dispatch = useDispatch();
+  const location = useLocation();
 
   useEffect(() => {
     if (activesection === "notification") {
@@ -87,6 +92,9 @@ const SideBar = () => {
     SetimageUpdateModal(true);
   };
 
+  let HandleNavigesettings = () => {
+    navigate("/settings");
+  };
   const handleImageUpload = () => {
     const storageRef = ref(storage, `UsersData/${Date.now()}`);
     if (typeof cropperRef.current?.cropper !== "undefined") {
@@ -160,6 +168,15 @@ const SideBar = () => {
     setImage("");
   };
 
+  let Handlenavigatenotification = () => {
+    navigate("/Notification");
+  };
+  let HandleNavigateMessage = () => {
+    navigate("/messageBox");
+  };
+  let HandleNavigateHome = () =>{
+    navigate('/')
+  }
   return (
     <>
       <div className="h-screen py-9 px-8 hidden lg:block ">
@@ -338,10 +355,62 @@ const SideBar = () => {
           </div>
         )}
       </div>
-      <div className="flex fixed top-0 left-0 z-50 w-full bg-lal h-[40px] lg:hidden shadow-lg  rounded-sm">
-        <div className="  ">
-          <h1>hasibur rahman mahtab</h1>
-        </div>
+      <div className="flex fixed top-0 left-0 z-50 w-full h-[40px] lg:hidden shadow-lg  rounded-sm backdrop-blur-md">
+        <ul className="flex  gap-12 items-center ml-6">
+          {location.pathname === "/" ? (
+            <li className="text-2xl font-semibold font-Nunito text-[#fff] bg-Secondary py-2 px-4 rounded-sm">
+              <FaHome />
+            </li>
+          ) : (
+            <li onClick={HandleNavigateHome} className="text-2xl font-semibold font-Nunito text-[#000]">
+              <FaHome />
+            </li>
+          )}
+          {location.pathname === "/messageBox" ? (
+            <li className="text-2xl font-semibold font-Nunito text-[#fff] bg-Secondary py-2 px-4 rounded-sm">
+              <FaFacebookMessenger />
+            </li>
+          ) : (
+            <li
+              onClick={HandleNavigateMessage}
+              className="text-2xl font-semibold font-Nunito text-[#000]"
+            >
+              <FaFacebookMessenger />
+            </li>
+          )}
+          {location.pathname === "/Notification" ? (
+            <li className="text-2xl font-semibold font-Nunito text-[#fff] bg-Secondary py-2 px-4 rounded-sm">
+              <IoNotifications />
+            </li>
+          ) : (
+            <li
+              onClick={Handlenavigatenotification}
+              className="text-2xl font-semibold font-Nunito text-[#000]"
+            >
+              <IoNotifications />
+            </li>
+          )}
+          {location.pathname === "/settings" ? (
+            <li className="text-2xl font-semibold font-Nunito text-[#fff] bg-Secondary py-2 px-4 rounded-sm">
+              <IoMdSettings />
+            </li>
+          ) : (
+            <li
+              onClick={HandleNavigesettings}
+              className="text-2xl font-semibold font-Nunito text-[#000]"
+            >
+              <IoMdSettings />
+            </li>
+          )}
+
+          <div className="w-[30px] h-[30px] items-center  ">
+            <img
+              className="w-full h-full rounded-full object-cover"
+              src={demoimage}
+              alt=""
+            />
+          </div>
+        </ul>
       </div>
     </>
   );

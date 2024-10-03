@@ -87,9 +87,9 @@ const ProfileSettings = () => {
   },[])
 
   return (
-    <div className="w-full h-[750px] shadow-md rounded-[16px] py-7 px-7">
+    <div className="lg:w-full w-full h-[750px] shadow-md rounded-[16px] py-7 px-7 ">
       <div>
-        <p className="font-semibold text-xl font-Nunito text-ThirdColor">
+        <p className="font-semibold lg:text-xl text-lg font-Nunito text-ThirdColor">
           Profile Settings
         </p>
         <div className="pt-[49px] flex items-center gap-7 border-b border-ThirdColor/25 pb-7 ml-3">
@@ -99,7 +99,7 @@ const ProfileSettings = () => {
             alt="Profile"
           />
           <div>
-            <h3 className="font-semibold text-[25px] text-ThirdColor font-Nunito">
+            <h3 className="font-semibold lg:text-[25px] text-lg text-ThirdColor font-Nunito">
               {data?.displayName}
             </h3>
             {statumaindata.map((item)=>(
@@ -115,23 +115,23 @@ const ProfileSettings = () => {
         <ul className="flex flex-col gap-9 pl-8 mt-11">
           <li
             onClick={handleNameUpdate}
-            className="flex items-center gap-9 text-3xl hover:text-Secondary cursor-pointer"
+            className="flex items-center gap-9 lg:text-3xl text-xl hover:text-Secondary cursor-pointer"
           >
             <RiEdit2Fill className="text-Secondary cursor-pointer duration-300" />
             Edit Profile Name
           </li>
           <li
             onClick={HandleStatusUpdate}
-            className="flex items-center gap-9 text-3xl"
+            className="flex items-center  gap-9 lg:text-3xl text-xl"
           >
             <MdEditDocument className="text-Secondary cursor-pointer hover:text-ThirdColor duration-300" />
             Edit Profile Status Info
           </li>
-          <li className="flex items-center gap-9 text-3xl">
+          <li className="flex items-center gap-9 lg:text-3xl text-xl">
             <MdAddPhotoAlternate className="text-Secondary cursor-pointer hover:text-ThirdColor duration-300" />
             Edit Profile Photo
           </li>
-          <li className="flex items-center gap-9 text-3xl">
+          <li className="flex items-center gap-9 lg:text-3xl text-xl">
             <IoMdHelpCircle className="text-Secondary cursor-pointer hover:text-ThirdColor duration-300" />
             Help
           </li>
