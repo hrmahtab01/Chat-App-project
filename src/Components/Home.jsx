@@ -36,7 +36,7 @@ const Home = () => {
     } else {
       Setverify(true);
     }
-  });
+  },[data ,Setverify]);
   return (
     <>
       {verify ? (
