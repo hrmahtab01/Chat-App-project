@@ -174,9 +174,9 @@ const SideBar = () => {
   let HandleNavigateMessage = () => {
     navigate("/messageBox");
   };
-  let HandleNavigateHome = () =>{
-    navigate('/')
-  }
+  let HandleNavigateHome = () => {
+    navigate("/");
+  };
   return (
     <>
       <div className="h-screen py-9 px-8 hidden lg:block ">
@@ -355,22 +355,32 @@ const SideBar = () => {
           </div>
         )}
       </div>
-      <div className="flex fixed top-0 left-0 z-50 w-full h-[40px] lg:hidden shadow-lg  rounded-sm backdrop-blur-md">
+      <div className="flex fixed top-0 left-0 z-50 w-full h-[60px] lg:hidden shadow-lg  rounded-sm backdrop-blur-md">
         <ul className="flex  gap-12 items-center ml-6">
           {location.pathname === "/" ? (
             <li className="text-2xl font-semibold font-Nunito text-[#fff] bg-Secondary py-2 px-4 rounded-sm">
               <FaHome />
             </li>
           ) : (
-            <li onClick={HandleNavigateHome} className="text-2xl font-semibold font-Nunito text-[#000]">
+            <li
+              onClick={HandleNavigateHome}
+              className="text-2xl font-semibold font-Nunito text-[#000]"
+            >
               <FaHome />
             </li>
           )}
-          {location.pathname === "/messageBox" ? (
+
+          {  location.pathname === "/messageBox" ? (
             <li className="text-2xl font-semibold font-Nunito text-[#fff] bg-Secondary py-2 px-4 rounded-sm">
               <FaFacebookMessenger />
             </li>
-          ) : (
+          ) :location.pathname === "/chat" ? (
+            <li className="text-2xl font-semibold font-Nunito text-[#fff] bg-Secondary py-2 px-4 rounded-sm">
+              <FaFacebookMessenger />
+            </li>
+          ):
+          
+          (
             <li
               onClick={HandleNavigateMessage}
               className="text-2xl font-semibold font-Nunito text-[#000]"
@@ -378,6 +388,7 @@ const SideBar = () => {
               <FaFacebookMessenger />
             </li>
           )}
+
           {location.pathname === "/Notification" ? (
             <li className="text-2xl font-semibold font-Nunito text-[#fff] bg-Secondary py-2 px-4 rounded-sm">
               <IoNotifications />
@@ -390,6 +401,7 @@ const SideBar = () => {
               <IoNotifications />
             </li>
           )}
+
           {location.pathname === "/settings" ? (
             <li className="text-2xl font-semibold font-Nunito text-[#fff] bg-Secondary py-2 px-4 rounded-sm">
               <IoMdSettings />
@@ -403,10 +415,10 @@ const SideBar = () => {
             </li>
           )}
 
-          <div className="w-[30px] h-[30px] items-center  ">
+          <div className="w-[45px] h-[45px] items-center  ">
             <img
               className="w-full h-full rounded-full object-cover"
-              src={demoimage}
+              src={data?.displayName}
               alt=""
             />
           </div>

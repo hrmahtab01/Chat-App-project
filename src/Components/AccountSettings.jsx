@@ -64,7 +64,7 @@ const AccountSettings = () => {
   };
 
   return (
-    <div className="w-full h-[750px] shadow-md rounded-[16px]">
+    <div className="w-full lg:h-[750px] shadow-md rounded-[16px] py-10 lg:py-0">
       <div className="pt-7 pl-5">
         <h3 className="text-xl font-semibold font-Nunito text-ThirdColor">
           Account Settings

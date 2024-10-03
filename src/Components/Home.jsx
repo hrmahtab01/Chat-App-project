@@ -40,7 +40,7 @@ const Home = () => {
   return (
     <>
       {verify ? (
-        <section className="sm:py-9 sm:flex sm:w-full sm:justify-around grid grid-cols-1 mt-[100px] lg:mt-0 pb-8 lg:pb-0 ">
+        <section className="sm:py-9 sm:flex sm:w-full sm:justify-around grid grid-cols-1 mt-[100px] lg:mt-0 pb-8 lg:pb-0  ">
           <div>
             <GroupListCom />
             <Friend />

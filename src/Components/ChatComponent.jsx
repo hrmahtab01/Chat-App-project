@@ -9,6 +9,8 @@ import { getDatabase, onValue, push, ref, set } from "firebase/database";
 import moment from "moment";
 import EmojiPicker from "emoji-picker-react";
 import { useRef } from "react";
+import { GrFormPrevious } from "react-icons/gr";
+import { Navigate } from "react-router-dom";
 
 const ChatComponent = () => {
   const db = getDatabase();
@@ -17,8 +19,8 @@ const ChatComponent = () => {
   const [chat, Setchat] = useState("");
   const [chatuserdata, Setchatuserdata] = useState([]);
   const [emojipiker, Setemojipiker] = useState(false);
-  const scroller =useRef(null)
-  
+  const scroller = useRef(null);
+  const [Navigatemsg, Setnavigatemsg] = useState(null);
 
   let HandleChating = (e) => {
     Setchat(e.target.value);
@@ -53,14 +55,13 @@ const ChatComponent = () => {
         }
       });
       Setchatuserdata(chatarray);
-      Setemojipiker(false)
+      Setemojipiker(false);
     });
   }, [data.uid, chatadata?.userid, db]);
 
   let HandleSelectEmoji = (e) => {
     Setchat((prevent) => prevent + e.emoji);
   };
-
 
   useEffect(() => {
     scroller.current?.scrollIntoView({
@@ -69,10 +70,15 @@ const ChatComponent = () => {
       inline: "nearest",
     });
   }, [chatuserdata]);
-  
+
+  // useEffect(()=>{
+  //   if (Navigatemsg ==='true') {
+  //     Navigate('/messageBox')
+  //   }
+  // },[Navigate])
 
   return (
-    <div className="lg:w-[1000px] w-full pb-8 lg:h-[850px] max-h-screen mt-8 lg:mt-0  shadow-md rounded-[16px] px-8 relative  ">
+    <div className="lg:w-[1000px] w-full pb-8 lg:h-[850px] max-h-screen mt-12 lg:mt-0  shadow-md rounded-[16px] px-8 relative  ">
       <div className="flex justify-between items-center  border-b border-black/25 pb-6 mt-4 relative ">
         <div className="flex gap-3  relative">
           <img
@@ -90,12 +96,12 @@ const ChatComponent = () => {
         </div>
         <BsThreeDotsVertical />
       </div>
-      <div  className=" w-full lg:h-[600px] h-[450px] mb-10 overflow-y-scroll no-scroll no-scrollbar  ">
+      <div className=" w-full lg:h-[600px] h-[450px] mb-10 overflow-y-scroll no-scroll no-scrollbar  ">
         <div className="relative overflow-hidden">
           {chatuserdata.map((item) =>
             data.uid == item.reciverid ? (
-              <div ref={scroller} >
-                <div  className="flex justify-start relative overflow-hidden  mt-[15px] ml-[54px]">
+              <div ref={scroller}>
+                <div className="flex justify-start relative overflow-hidden  mt-[15px] lg:ml-[54px]">
                   <div className="  bg-[#F1F1F1]  rounded-[10px] flex justify-center items-center px-3 py-2  ">
                     <h3 className="text-[16px] font-semibold font-Nunito text-ThirdColor ">
                       {item.chatvalue}
@@ -107,15 +113,15 @@ const ChatComponent = () => {
                 </p>
               </div>
             ) : (
-              <div ref={scroller} >
-                <div className="flex justify-end relative overflow-hidden  mt-[15px] mr-[54px]">
+              <div ref={scroller}>
+                <div className="flex justify-end relative overflow-hidden  mt-[15px] lg:mr-[54px]">
                   <div className="  max-w-[200px]  bg-Secondary rounded-xl flex justify-center items-center px-3 py-2  ">
                     <p className="text-[#fff] text-[16px] font-medium font-Nunito">
                       {item.chatvalue}
                     </p>
                   </div>
                 </div>
-                <p className="ml-[50px] text-sm font-normal font-Nunito text-ThirdColor/25 mt-1 flex justify-end mr-[54px]">
+                <p className="ml-[50px] text-sm font-normal font-Nunito text-ThirdColor/25 mt-1 flex justify-end lg:mr-[54px]">
                   {moment(item.Date, "YYYYMMDDhh:mm").fromNow()}
                 </p>
               </div>
@@ -139,7 +145,7 @@ const ChatComponent = () => {
           <FaCamera className="absolute top-[50%] right-0 lg:right-4 translate-y-[-50%] text-Secondary text-base cursor-pointer  " />
         </div>
         <div
-          onClick={HandleChatSubmit} 
+          onClick={HandleChatSubmit}
           className="py-[10px] px-[10px]  bg-Secondary rounded-[10px] lg:ml-0 "
         >
           <IoIosSend className=" text-[#fff] text-2xl" />

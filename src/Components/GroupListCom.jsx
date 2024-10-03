@@ -99,7 +99,7 @@ const GroupListCom = () => {
             />
           </div>
 
-          <div className="w-full h-[300px] overflow-y-scroll cursor-pointer relative no-scrollbar ">
+          <div className="w-full lg:h-[300px] h-[404px] overflow-y-scroll cursor-pointer relative no-scrollbar ">
             {CreateModal ? (
               <div className="flex flex-col mt-4">
                 <input
@@ -130,8 +130,8 @@ const GroupListCom = () => {
             ) : (
               <>
                 {GroupSrcData.length > 0
-                  ? GroupSrcData.map((item) => (
-                      <div className="flex justify-between items-center  border-b border-black/25 pb-3 mt-4">
+                  ? GroupSrcData.map((item ,index) => (
+                      <div key={index} className="flex justify-between items-center  border-b border-black/25 pb-3 mt-4">
                         <div className="flex gap-3 mt-[17px]">
                           <div className="relative">
                             <img

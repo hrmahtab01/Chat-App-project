@@ -52,7 +52,7 @@ const Friend = () => {
   return (
     <section>
       <div className="  ">
-        <div className="lg:w-[427px] w-[370px]  shadow-xl rounded-[20px] mt-[43px] py-4 px-6 ">
+        <div className="lg:w-[427px] w-[370px]  shadow-xl rounded-[20px] lg:mt-[43px] mt-[70px] py-4 px-6 ">
           <div className="flex justify-between items-center">
             <h3 className="text-lg text-ThirdColor font-semibold font-Nunito">
               Friend Request
@@ -60,9 +60,9 @@ const Friend = () => {
             <BsThreeDotsVertical className="text-Secondary" />
           </div>
 
-          <div className="w-full h-[300px] overflow-y-scroll cursor-pointer no-scrollbar">
-            {firndRequestlist.map((item) => (
-              <div className="border-b border-black/25 pb-6 ">
+          <div className="w-full lg:h-[300px] h-[404px] overflow-y-scroll cursor-pointer no-scrollbar">
+            {firndRequestlist.map((item ,index) => (
+              <div key={index} className="border-b border-black/25 pb-6 ">
                 <div className="flex justify-between items-center  ">
                   <div className="flex gap-3 mt-[17px]">
                     <img

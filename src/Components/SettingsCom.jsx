@@ -6,8 +6,8 @@ import AccountSettings from "./AccountSettings";
 
 const SettingsCom = () => {
   return (
-    <div className="w-full lg:px-10 lg:mt-0 mt-7">
-      <div className="w-full  relative h-[59px] my-9 ">
+    <div className="w-full lg:px-10 lg:mt-0 mt-7 mb-7 lg:mb-0">
+      <div className="w-full  relative h-[59px] my-9 lg:block hidden ">
         <input
           type="text"
           placeholder="Search"

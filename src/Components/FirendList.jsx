@@ -103,78 +103,76 @@ const FriendList = () => {
 
   return (
     <section>
-      <div className="  ">
-        <div className="lg:w-[427px] w-[370px]  shadow-xl rounded-[20px]  py-4 px-6 mx-auto ">
-          <div className="flex justify-between items-center">
-            <h3 className="text-lg text-ThirdColor font-semibold font-Nunito">
-              Friends
-            </h3>
-            <BsThreeDotsVertical className="text-Secondary" />
-          </div>
-          <div className="w-full h-[404px] overflow-y-scroll  cursor-pointer no-scrollbar  ">
-            {FriendData.map((item) => (
-              <div className="flex justify-between items-center  border-b border-black/25 pb-6 mt-4">
-                <div className="flex gap-3 mt-[17px]">
+      <div className="lg:w-[427px] w-[370px]  shadow-xl rounded-[20px] mt-[70px] lg:mt-0 py-4 px-6 mx-auto ">
+        <div className="flex justify-between items-center">
+          <h3 className="text-lg text-ThirdColor font-semibold font-Nunito">
+            Friends
+          </h3>
+          <BsThreeDotsVertical className="text-Secondary" />
+        </div>
+        <div className="w-full h-[404px] overflow-y-scroll  cursor-pointer no-scrollbar  ">
+          {FriendData.map((item ,index) => (
+            <div key={index} className="flex justify-between items-center  border-b border-black/25 pb-6 mt-4">
+              <div className="flex gap-3 mt-[17px]">
+                {data.uid == item.ReciverId ? (
+                  <div className="w-[52px] h-[52px] relative">
+                    <img
+                      src={item.SenderImage}
+                      alt="progileimage"
+                      className=" w-full h-full rounded-full object-cover"
+                    />
+                    <div
+                      onClick={() => HandleUSerprofile(item)}
+                      className="w-full h-full bg-ThirdColor/40 absolute top-0 left-0 rounded-full opacity-0 hover:opacity-100 duration-100"
+                    ></div>
+                  </div>
+                ) : (
+                  <div className="w-[52px] h-[52px] relative">
+                    <img
+                      src={item.ReciverImage}
+                      alt="progileimage"
+                      className=" w-full h-full rounded-full object-cover"
+                    />
+                    <div
+                      onClick={() => HandleUSerprofile(item)}
+                      className="w-full h-full bg-ThirdColor/40 absolute top-0 left-0 rounded-full opacity-0 hover:opacity-100 duration-100"
+                    ></div>
+                  </div>
+                )}
+
+                <div className="">
                   {data.uid == item.ReciverId ? (
-                    <div className="w-[52px] h-[52px] relative">
-                      <img
-                        src={item.SenderImage}
-                        alt="progileimage"
-                        className=" w-full h-full rounded-full object-cover"
-                      />
-                      <div
-                        onClick={() => HandleUSerprofile(item)}
-                        className="w-full h-full bg-ThirdColor/40 absolute top-0 left-0 rounded-full opacity-0 hover:opacity-100 duration-100"
-                      ></div>
-                    </div>
+                    <h3 className="text-sm font-semibold font-Nunito text-ThirdColor">
+                      {item.SenderName}
+                    </h3>
                   ) : (
-                    <div className="w-[52px] h-[52px] relative">
-                      <img
-                        src={item.ReciverImage}
-                        alt="progileimage"
-                        className=" w-full h-full rounded-full object-cover"
-                      />
-                      <div
-                        onClick={() => HandleUSerprofile(item)}
-                        className="w-full h-full bg-ThirdColor/40 absolute top-0 left-0 rounded-full opacity-0 hover:opacity-100 duration-100"
-                      ></div>
-                    </div>
+                    <h3 className="text-sm font-semibold font-Nunito text-ThirdColor">
+                      {item.ReciverName}
+                    </h3>
                   )}
 
-                  <div className="">
-                    {data.uid == item.ReciverId ? (
-                      <h3 className="text-sm font-semibold font-Nunito text-ThirdColor">
-                        {item.SenderName}
-                      </h3>
-                    ) : (
-                      <h3 className="text-sm font-semibold font-Nunito text-ThirdColor">
-                        {item.ReciverName}
-                      </h3>
-                    )}
-
-                    <p className="text-xs font-normal text-FourColor/75">
-                      {moment(item.Date, "YYYYMMDDhh:mm").fromNow()}
-                    </p>
-                  </div>
+                  <p className="text-xs font-normal text-FourColor/75">
+                    {moment(item.Date, "YYYYMMDDhh:mm").fromNow()}
+                  </p>
                 </div>
-                {location.pathname === "/messageBox" ? (
-                  <button
-                    onClick={() => Handlechat(item)}
-                    className="px-3 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]"
-                  >
-                    Msg
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => HandleBlock(item)}
-                    className="px-3 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]"
-                  >
-                    Block
-                  </button>
-                )}
               </div>
-            ))}
-          </div>
+              {location.pathname === "/messageBox" ? (
+                <button
+                  onClick={() => Handlechat(item)}
+                  className="px-3 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]"
+                >
+                  Msg
+                </button>
+              ) : (
+                <button
+                  onClick={() => HandleBlock(item)}
+                  className="px-3 py-2 bg-Secondary font-semibold font-Nunito text-[#fff] rounded-[5px]"
+                >
+                  Block
+                </button>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </section>

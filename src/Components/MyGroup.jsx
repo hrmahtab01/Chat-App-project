@@ -9,7 +9,7 @@ const MyGroup = () => {
   const [groupData, setGroupData] = useState([]);
   const db = getDatabase();
   const data = useSelector((state) => state.UserData.value);
-  console.log(data);
+ 
   
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const MyGroup = () => {
   return (
     <section>
       <div>
-        <div className="lg:w-[427px] w-[370px] shadow-xl rounded-[20px] mt-[43px] py-4 px-6">
+        <div className="lg:w-[427px] w-[370px] shadow-xl rounded-[20px] lg:mt-[43px] mt-[70px] py-4 px-6 ">
           <div className="flex justify-between items-center">
             <h3 className="text-lg text-ThirdColor font-semibold font-Nunito">
               My Groups
@@ -36,7 +36,7 @@ const MyGroup = () => {
             <BsThreeDotsVertical className="text-Secondary" />
           </div>
 
-          <div className="w-full h-[300px] overflow-y-scroll cursor-pointer no-scrollbar">
+          <div className="w-full lg:h-[300px] h-[404px] overflow-y-scroll cursor-pointer no-scrollbar">
             {groupData.map((item) => (
               <div key={item.id} className="flex justify-between items-center border-b border-black/25 pb-6 mt-4">
                 <div className="flex gap-3 mt-[17px]">
@@ -53,7 +53,7 @@ const MyGroup = () => {
                       {item.groupName}
                     </h3>
                     <p className=" text-base font-medium text-FourColor font-Nunito">
-                    Created by : <span className="text-base font-normal text-FourColor/75">{data.displayName}</span>
+                    Created by : <span className="text-base font-normal text-FourColor/75">{item.AdminName}</span>
                     </p>
                   </div>
                 </div>
