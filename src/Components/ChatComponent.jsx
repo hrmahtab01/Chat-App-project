@@ -11,8 +11,18 @@ import EmojiPicker from "emoji-picker-react";
 import { useRef } from "react";
 import { GrFormPrevious } from "react-icons/gr";
 import { Navigate } from "react-router-dom";
+import {
+  getDownloadURL,
+  getStorage,
+  ref as sref,
+  uploadBytes,
+} from "firebase/storage";
+import { PhotoProvider, PhotoView } from 'react-photo-view';
+import 'react-photo-view/dist/react-photo-view.css';
+
 
 const ChatComponent = () => {
+  const storage = getStorage();
   const db = getDatabase();
   const chatadata = useSelector((state) => state.chatuserdata.value);
   let data = useSelector((state) => state.UserData.value);
@@ -20,7 +30,9 @@ const ChatComponent = () => {
   const [chatuserdata, Setchatuserdata] = useState([]);
   const [emojipiker, Setemojipiker] = useState(false);
   const scroller = useRef(null);
-  const [Navigatemsg, Setnavigatemsg] = useState(null);
+  const [createImagemodal, SetcreateImagemodal] = useState(false);
+  const [imagedata, Setimagedata] = useState(null);
+  
 
   let HandleChating = (e) => {
     Setchat(e.target.value);
@@ -77,6 +89,37 @@ const ChatComponent = () => {
   //   }
   // },[Navigate])
 
+  let HandleImagemodal = () => {
+    SetcreateImagemodal(true);
+  };
+  let Handleimagefile = (e) => {
+    Setimagedata(e.target.files[0]);
+  };
+  let HandleImagesent = () => {
+    const storageRef = sref(storage, `chatimage/ ${Date.now()}`);
+
+    uploadBytes(storageRef, imagedata).then((snapshot) => {
+      getDownloadURL(storageRef).then((downloadURL) => {
+        set(push(ref(db, "chatlist/")), {
+          senderid: data.uid,
+          SenderName: data.displayName,
+          reciverid: chatadata.userid,
+          recivername: chatadata.name,
+          imagevalue: downloadURL,
+          Date: `${new Date().getFullYear()}-${
+            new Date().getMonth() + 1
+          }-${new Date().getDate()}-${new Date().getHours()}-${new Date().getMinutes()}-${new Date().getSeconds()}`,
+        }).then(() => {
+          SetcreateImagemodal(false);
+        });
+      });
+    });
+  };
+
+  let HadleImageModalcancel = () => {
+    SetcreateImagemodal(false);
+  };
+
   return (
     <div className="lg:w-[1000px] w-full pb-8 lg:h-[850px] max-h-screen mt-12 lg:mt-0  shadow-md rounded-[16px] px-8 relative  ">
       <div className="flex justify-between items-center  border-b border-black/25 pb-6 mt-4 relative ">
@@ -103,9 +146,18 @@ const ChatComponent = () => {
               <div ref={scroller}>
                 <div className="flex justify-start relative overflow-hidden  mt-[15px] lg:ml-[54px]">
                   <div className="  bg-[#F1F1F1]  rounded-[10px] flex justify-center items-center px-3 py-2  ">
-                    <h3 className="text-[16px] font-semibold font-Nunito text-ThirdColor ">
-                      {item.chatvalue}
-                    </h3>
+                    {item.chatvalue ? (
+                      <h3 className="text-[16px] font-semibold font-Nunito text-ThirdColor ">
+                        {item.chatvalue}
+                      </h3>
+                    ) : (
+                      <PhotoProvider>
+                      <PhotoView src={item.imagevalue}>
+                        <img className="lg:w-[300px] lg:h-[300px] w-[150px] h-[150px]" src={item.imagevalue} alt="" />
+                      </PhotoView>
+                    </PhotoProvider>
+                    )}
+                    
                   </div>
                 </div>
                 <p className="ml-[50px] text-sm font-normal font-Nunito text-ThirdColor/25 mt-1 ">
@@ -115,11 +167,19 @@ const ChatComponent = () => {
             ) : (
               <div ref={scroller}>
                 <div className="flex justify-end relative overflow-hidden  mt-[15px] lg:mr-[54px]">
+                    {item.chatvalue ? (
                   <div className="  max-w-[200px]  bg-Secondary rounded-xl flex justify-center items-center px-3 py-2  ">
-                    <p className="text-[#fff] text-[16px] font-medium font-Nunito">
-                      {item.chatvalue}
-                    </p>
+                      <h3 className="text-[16px] font-semibold font-Nunito text-[#fff] ">
+                        {item.chatvalue}
+                      </h3>
                   </div>
+                    ) : 
+                    <PhotoProvider>
+                    <PhotoView src={item.imagevalue}>
+                      <img className="lg:w-[300px] lg:h-[300px] w-[150px] h-[150px]" src={item.imagevalue} alt="" />
+                    </PhotoView>
+                  </PhotoProvider>
+                    }
                 </div>
                 <p className="ml-[50px] text-sm font-normal font-Nunito text-ThirdColor/25 mt-1 flex justify-end lg:mr-[54px]">
                   {moment(item.Date, "YYYYMMDDhh:mm").fromNow()}
@@ -142,7 +202,10 @@ const ChatComponent = () => {
             className="absolute top-[50%] right-5 lg:right-10 translate-y-[-50%] text-Secondary text-lg cursor-pointer "
           />
 
-          <FaCamera className="absolute top-[50%] right-0 lg:right-4 translate-y-[-50%] text-Secondary text-base cursor-pointer  " />
+          <FaCamera
+            onClick={HandleImagemodal}
+            className="absolute top-[50%] right-0 lg:right-4 translate-y-[-50%] text-Secondary text-base cursor-pointer  "
+          />
         </div>
         <div
           onClick={HandleChatSubmit}
@@ -152,8 +215,34 @@ const ChatComponent = () => {
         </div>
       </div>
       {emojipiker && (
-        <div className="absolute bottom-[100px] right-[100px]">
-          <EmojiPicker onEmojiClick={HandleSelectEmoji} />
+        <div className="absolute bottom-[100px] right-[100px] ">
+          <EmojiPicker  onEmojiClick={HandleSelectEmoji} />
+        </div>
+      )}
+      {createImagemodal && (
+        <div className="bg-ThirdColor/30 absolute top-0 left-0 w-full h-screen flex justify-center items-center">
+          <div className="w-[500px] h-[300px] bg-[#Fff] rounded-md shadow-md flex flex-col justify-center items-center">
+            <h3 className="text-center mt-3 text-lg font-semibold font-Nunito text-[#000]">
+              Chose your image
+            </h3>
+            <div className=" flex justify-center mt-3">
+              <input onChange={Handleimagefile} type="file" />
+            </div>
+            <div className="flex justify-center gap-4 mt-7">
+              <button
+                onClick={HandleImagesent}
+                className="py-2 px-3 bg-Secondary rounded-md text-[#Fff] font-semibold font-Nunito text-lg"
+              >
+                Sent
+              </button>
+              <button
+                onClick={HadleImageModalcancel}
+                className="py-2 px-3 bg-Secondary rounded-md text-[#Fff] font-semibold font-Nunito text-lg"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
