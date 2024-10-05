@@ -114,7 +114,7 @@ const Signin = () => {
             Free register and you can enjoy it
           </p>
 
-          <div className="w-[268px] h-[62px] mt-[61px] relative lg:w-[368px] lg:h-[82px] md:w-[368px] md:h-[82px] mx-auto lg:mx-0">
+          <div className="w-full h-[62px] mt-[61px] relative lg:w-[368px] lg:h-[82px] md:w-[368px] md:h-[82px] mx-auto lg:mx-0 px-4 lg:px-0">
             <label className="absolute -top-[14px] left-[50px] bg-[#ffff] py-1 px-3 text-sm font-semibold text-[#11175D] font-Nunito">
               Email Address
             </label>
@@ -141,7 +141,7 @@ const Signin = () => {
             )}
           </div>
 
-          <div className="w-[268px] h-[62px] mt-[61px] relative lg:w-[368px] lg:h-[82px] md:w-[368px] md:h-[82px] mx-auto lg:mx-0">
+          <div className="w-full h-[62px] mt-[61px] relative lg:w-[368px] lg:h-[82px] md:w-[368px] md:h-[82px] mx-auto lg:mx-0 lg:px-0 px-4">
             <label className="absolute -top-[14px] left-[50px] bg-[#ffff] py-1 px-3 text-sm font-semibold text-[#11175D] font-Nunito">
               Full name
             </label>
@@ -160,7 +160,7 @@ const Signin = () => {
               </div>
             )}
           </div>
-          <div className="w-[268px] h-[62px] mt-[61px] relative lg:w-[368px] lg:h-[82px] md:w-[368px] md:h-[82px] mx-auto lg:mx-0">
+          <div className="w-full lg:px-0 px-4 h-[62px] mt-[61px] relative lg:w-[368px] lg:h-[82px] md:w-[368px] md:h-[82px] mx-auto lg:mx-0">
             <label className="absolute -top-[14px] left-[50px] bg-[#ffff] py-1 px-3 text-sm font-semibold text-[#11175D] font-Nunito">
               Password
             </label>
@@ -214,7 +214,7 @@ const Signin = () => {
             <div className="flex justify-center lg:justify-start">
               <button
                 onClick={handleSubmit}
-                className=" py-4 px-[100px]  lg:py-[20px] lg:px-[145px] md:py-[20px] md:px-[145px] bg-Secondary rounded-xl text-xl font-semibold font-Nunito text-[#ffffff] mt-[51px]"
+                className=" py-4 px-[150px]  lg:py-[20px] lg:px-[145px] md:py-[20px] md:px-[145px] bg-Secondary rounded-xl text-xl font-semibold font-Nunito text-[#ffffff] mt-[51px]"
               >
                 Sign up
               </button>

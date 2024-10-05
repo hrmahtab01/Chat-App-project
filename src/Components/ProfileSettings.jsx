@@ -87,7 +87,7 @@ const ProfileSettings = () => {
   },[])
 
   return (
-    <div className="lg:w-full w-full lg:h-[750px] shadow-md rounded-[16px] lg:py-7 py-10 px-7">
+    <div className="lg:w-full w-full lg:h-[750px] shadow-md shadow-ThirdColor rounded-[16px] lg:py-7 py-10 px-7">
       <div>
         <p className="font-semibold lg:text-xl text-lg font-Nunito text-ThirdColor">
           Profile Settings

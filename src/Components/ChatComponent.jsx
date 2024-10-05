@@ -121,13 +121,13 @@ const ChatComponent = () => {
   };
 
   return (
-    <div className="lg:w-[1000px] w-full pb-8 lg:h-[850px] max-h-screen mt-12 lg:mt-0  shadow-md rounded-[16px] px-8 relative  ">
+    <div className="lg:w-[1000px] w-full pb-8 lg:h-[850px] max-h-screen mt-12 lg:mt-0  shadow-md shadow-ThirdColor rounded-[16px] px-8 relative  ">
       <div className="flex justify-between items-center  border-b border-black/25 pb-6 mt-4 relative ">
-        <div className="flex gap-3  relative">
+        <div className="flex gap-3  relative mt-4">
           <img
             src={chatadata?.image}
             alt="progileimage"
-            className="w-[70px] h-[70px] rounded-full object-cover "
+            className="w-[70px] h-[70px]  rounded-full object-cover "
           />
 
           <div className="">

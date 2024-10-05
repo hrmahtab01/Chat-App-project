@@ -52,7 +52,7 @@ const Friend = () => {
   return (
     <section>
       <div className="  ">
-        <div className="lg:w-[427px] w-[370px]  shadow-xl rounded-[20px] lg:mt-[43px] mt-[70px] py-4 px-6 ">
+        <div className="lg:w-[450px] w-[370px]  shadow-md shadow-ThirdColor rounded-[20px] lg:mt-[43px] mt-[70px] py-4 px-6 ">
           <div className="flex justify-between items-center">
             <h3 className="text-lg text-ThirdColor font-semibold font-Nunito">
               Friend Request

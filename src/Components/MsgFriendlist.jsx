@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { chatlistdatastore } from "../Slices/ChatSlice";
 
-const FriendList = () => {
+const MsgFriendlist = () => {
   let navigate = useNavigate();
   let data = useSelector((state) => state.UserData.value);
   const db = getDatabase();
@@ -103,14 +103,14 @@ const FriendList = () => {
 
   return (
     <section>
-      <div className="lg:w-[450px] w-[370px] shadow-md shadow-ThirdColor rounded-[20px] mt-[70px] lg:mt-0 py-4 px-6 mx-auto ">
+      <div className="lg:w-[450px] w-[370px]  shadow-md shadow-ThirdColor rounded-[20px] mt-[70px] lg:mt-0 py-4 px-6 mx-auto ">
         <div className="flex justify-between items-center">
           <h3 className="text-lg text-ThirdColor font-semibold font-Nunito">
             Friends
           </h3>
           <BsThreeDotsVertical className="text-Secondary" />
         </div>
-        <div className="w-full h-[404px] overflow-y-scroll  cursor-pointer no-scrollbar  ">
+        <div className="w-full lg:h-[300px] h-[404px] overflow-y-scroll  cursor-pointer no-scrollbar  ">
           {FriendData.map((item ,index) => (
             <div key={index} className="flex justify-between items-center  border-b border-black/25 pb-6 mt-4">
               <div className="flex gap-3 mt-[17px]">
@@ -179,4 +179,15 @@ const FriendList = () => {
   );
 };
 
-export default FriendList;
+export default MsgFriendlist;
+
+
+
+
+
+
+
+
+
+
+

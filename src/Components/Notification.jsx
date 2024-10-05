@@ -12,12 +12,12 @@ const Notification = () => {
           <input
             type="text"
             placeholder="Search"
-            className=" w-full h-full shadow-lg rounded-[20px] placeholder:absolute placeholder:top-2/4 placeholder:left-14 placeholder:translate-y-[-50%] outline-none type pl-16"
+            className=" w-full h-full shadow-md shadow-ThirdColor rounded-[20px] placeholder:absolute placeholder:top-2/4 placeholder:left-14 placeholder:translate-y-[-50%] outline-none type pl-16"
           />
           <CiSearch className="absolute top-2/4 left-4 translate-y-[-50%] text-[19px] text-ThirdColor font-bold" />
           <BsThreeDotsVertical className="absolute right-0 top-2/4  translate-y-[-50%] text-Secondary text-lg" />
         </div>
-        <div className="w-full  shadow-md rounded-[20px] mt-6 px-8">
+        <div className="w-full  shadow-md shadow-ThirdColor mb-5 rounded-[20px] mt-6 px-8">
           <div className="border-b border-ThirdColor/25 pb-6 flex items-center pt-7 ml-8 gap-10">
             <div className=" ">
               <IoIosNotifications className="text-3xl text-Secondary" />

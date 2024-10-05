@@ -143,17 +143,17 @@ const UserList = () => {
   return (
     <section>
       <div>
-        <div className="lg:w-[427px] w-[370px]  relative h-[59px] mt-[60px] lg:mt-0 ">
+        <div className="lg:w-[450px] w-[370px]  relative h-[59px] mt-[60px] lg:mt-0 ">
           <input
             onChange={HandlesrcUser}
             type="text"
             placeholder="Search"
-            className=" w-full h-full shadow-lg rounded-[20px] placeholder:absolute placeholder:top-2/4 placeholder:left-14 placeholder:translate-y-[-50%] outline-none type pl-16"
+            className=" w-full h-full shadow-md shadow-ThirdColor rounded-[20px] placeholder:absolute placeholder:top-2/4 placeholder:left-14 placeholder:translate-y-[-50%] outline-none type pl-16"
           />
           <CiSearch className="absolute top-2/4 left-4 translate-y-[-50%] text-[19px] text-ThirdColor font-bold" />
           <BsThreeDotsVertical className="absolute right-0 top-2/4  translate-y-[-50%] text-Secondary text-lg" />
         </div>
-        <div className="lg:w-[427px] w-[370px] shadow-xl rounded-[20px] py-4 px-6 mt-[43px] ">
+        <div className="lg:w-[450px] w-[370px] shadow-md shadow-ThirdColor rounded-[20px] py-4 px-6 mt-[43px] ">
           <div className="flex justify-between items-center">
             <h3 className="text-lg text-ThirdColor font-semibold font-Nunito">
               User List

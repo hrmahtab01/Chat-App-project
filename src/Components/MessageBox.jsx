@@ -5,6 +5,8 @@ import ChatComponent from "./ChatComponent";
 import FriendList from "./FirendList";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import MsgGrouplist from "./MsgGrouplist";
+import MsgFriendlist from "./MsgFriendlist";
 
 const MessageBox = () => {
   const Navigate = useNavigate();
@@ -18,9 +20,11 @@ const MessageBox = () => {
   }, [chatadata, Navigate]);
 
   return (
+    
     <div className="flex py-7 gap-[60px] ">
-      <div className="flex flex-col gap-8">
-        <FriendList />
+      <div className="flex flex-col lg:gap-8  ">
+       <MsgGrouplist/>
+       <MsgFriendlist/>
       </div>
 
       <div className="hidden  lg:block">{chatadata && <ChatComponent />}</div>

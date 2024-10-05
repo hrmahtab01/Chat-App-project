@@ -15,8 +15,8 @@ const AccountSettings = () => {
   const navigate = useNavigate();
   const auth = getAuth();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [email, setEmail] = useState(""); // Track the user's email
-  const [password, setPassword] = useState(""); // Track the user's password
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState(""); 
   const [isEditPasswordModalOpen, setIsEditPasswordModalOpen] = useState(false);
   const [newPassword, setNewPassword] = useState("");
 
@@ -58,13 +58,12 @@ const AccountSettings = () => {
     updatePassword(user, newPassword).then(() => {
       isEditPasswordModalOpen(false)
     }).catch((error) => {
-      // An error ocurred
-      // ...
+      
     });
   };
 
   return (
-    <div className="w-full lg:h-[750px] shadow-md rounded-[16px] py-10 lg:py-0">
+    <div className="w-full lg:h-[750px] shadow-md shadow-ThirdColor rounded-[16px] py-10 lg:py-0">
       <div className="pt-7 pl-5">
         <h3 className="text-xl font-semibold font-Nunito text-ThirdColor">
           Account Settings
