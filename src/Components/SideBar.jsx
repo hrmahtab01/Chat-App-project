@@ -415,11 +415,11 @@ const SideBar = () => {
             </li>
           )}
 
-          <div className="w-[45px] h-[45px] items-center  ">
+          <div className="w-[38px] h-[38px] items-center  ">
             <img
               className="w-full h-full rounded-full object-cover"
               src={data?.displayName}
-              alt=""
+              alt="profile image"
             />
           </div>
         </ul>
