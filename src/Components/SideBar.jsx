@@ -179,7 +179,7 @@ const SideBar = () => {
   };
   return (
     <>
-      <div className="h-screen py-9 px-8 hidden lg:block ">
+      <div className="h-screen py-5 px-8 hidden lg:block ">
         <div className="lg:w-[186px] h-full w-[100px] bg-Secondary rounded-3xl">
           <div className="text-center pt-9">
             <div className="w-[100px] h-[100px] rounded-full overflow-hidden mx-auto relative group">
