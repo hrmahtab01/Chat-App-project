@@ -153,7 +153,7 @@ const ChatComponent = () => {
                     ) : (
                       <PhotoProvider>
                       <PhotoView src={item.imagevalue}>
-                        <img className="lg:w-[300px] lg:h-[300px] w-[150px] h-[150px]" src={item.imagevalue} alt="" />
+                        <img className="lg:w-[300px] lg:h-[300px] w-[150px] h-[150px] object-cover" src={item.imagevalue} alt="" />
                       </PhotoView>
                     </PhotoProvider>
                     )}

@@ -5,10 +5,23 @@ import progileimage from "../assets/mahtab.jpg";
 import Profileimage2 from "../assets/Signin.png";
 import profileimage3 from "../assets/Signup.jpg";
 import { FaPlus } from "react-icons/fa6";
-import { getDatabase, push, ref, set, onValue } from "firebase/database";
+import {
+  getDatabase,
+  push,
+  ref,
+  set,
+  onValue,
+  update,
+} from "firebase/database";
 import { useSelector } from "react-redux";
 import { PacmanLoader } from "react-spinners";
 import { InfinitySpin } from "react-loader-spinner";
+import {
+  getDownloadURL,
+  getStorage,
+  ref as pref,
+  uploadBytes,
+} from "firebase/storage";
 
 const GroupListCom = () => {
   const data = useSelector((state) => state.UserData.value);
@@ -20,6 +33,8 @@ const GroupListCom = () => {
   const [GroupSrcData, SetGroupsrcdata] = useState([]);
   const [groupmodal, SetgroupMOdal] = useState(false);
   const [Photodata, Setphotodata] = useState("");
+  const storage = getStorage();
+  const [groupid, setgroupid] = useState(null);
 
   const HandleCreatModal = () => {
     SetCreateModal(!CreateModal);
@@ -34,6 +49,7 @@ const GroupListCom = () => {
       groupName: Groupname,
       AdminName: data.displayName,
       adminid: data.uid,
+      groupphoto: profileimage3,
     })
       .then(() => {
         setloader(true);
@@ -56,7 +72,6 @@ const GroupListCom = () => {
       Setgroupdata(grouparray);
     });
   }, []);
-  console.log(Groupdata);
 
   const HandleSreachgrouplist = (e) => {
     const grouplist = Groupdata.filter((item) =>
@@ -65,14 +80,27 @@ const GroupListCom = () => {
     SetGroupsrcdata(grouplist);
   };
 
-  const HandlegroupmodalOpen = () => {
+  const HandlegroupmodalOpen = (item) => {
     SetgroupMOdal(true);
+    setgroupid(item.uid);
   };
 
-  const HandleSubmitphoto = () => {};
+  const HandleSubmitphoto = (groupid) => {
+    const storageRef = pref(storage, `groupphoto/ ${Date.now()}`);
+    uploadBytes(storageRef, Photodata).then((snapshot) => {
+      getDownloadURL(storageRef).then((downloadURL) => {
+        update(ref(db, "grouplist/" + groupid), {
+          groupphoto: downloadURL,
+        }),then(()=>{
+          SetgroupMOdal(false)
+        })
+      });
+    });
+  };
   const HandlecancelPhoto = () => {
     SetgroupMOdal(false);
   };
+
   return (
     <section>
       <div className="  ">
@@ -137,7 +165,7 @@ const GroupListCom = () => {
                         <div className="flex gap-3 mt-[17px]">
                           <div className="relative">
                             <img
-                              src={Profileimage2}
+                              src={item.groupphoto}
                               alt="progileimage"
                               className="w-[52px] h-[52px] rounded-full object-cover"
                             />
@@ -170,13 +198,13 @@ const GroupListCom = () => {
                       </div>
                     ))
                   : Groupdata.map((item) => {
-                      const isinvite = data.uid === item.adminid
+                      const isinvite = data.uid === item.adminid;
                       return (
                         <div className="flex justify-between items-center  border-b border-black/25 pb-3 mt-4">
                           <div className="flex gap-3 mt-[17px]">
                             <div className="relative">
                               <img
-                                src={Profileimage2}
+                                src={item.groupphoto}
                                 alt="progileimage"
                                 className="w-[52px] h-[52px] rounded-full object-cover"
                               />
@@ -214,16 +242,20 @@ const GroupListCom = () => {
           </div>
         </div>
         {groupmodal && (
-          <div className="bg-ThirdColor/30 w-full h-screen absolute top-0 left-0 flex justify-center items-center  ">
+          <div className="bg-ThirdColor/30 w-full h-screen absolute top-0 left-0 flex justify-center items-center z-40  ">
             <div className="w-[500px]  bg-[#fff] rounded-lg shadow-lal shadow-md pb-4">
               <h3 className="text-center text-lg font-medium font-Nunito text-ThirdColor mt-6">
                 Upload Group Photo
               </h3>
               <div className="w-full h-full  flex flex-col justify-center items-center mt-3">
-                <input className="mx-auto" type="file" />
+                <input
+                  onChange={(e) => Setphotodata(e.target.files[0])}
+                  className="mx-auto"
+                  type="file"
+                />
                 <div className="flex gap-3 mt-5">
                   <button
-                    onClick={HandleSubmitphoto}
+                    onClick={() => HandleSubmitphoto(groupid)}
                     className="py-3 px-6 bg-Secondary text-lg font-semibold text-[#fff] font-Nunito rounded-lg shadow-md shadow-ThirdColor hover:scale-105 duration-150  hover:translate-y-[-4px]"
                   >
                     Submit
