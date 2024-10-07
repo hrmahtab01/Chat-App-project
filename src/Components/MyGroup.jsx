@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import ProfileImage from "../assets/Signin.png";
-import { getDatabase, ref, onValue, remove } from "firebase/database";
+import { getDatabase, ref, onValue, remove, update } from "firebase/database";
 import { useSelector } from "react-redux";
 import { MdOutlineDelete } from "react-icons/md";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
@@ -14,6 +14,7 @@ const MyGroup = () => {
   const data = useSelector((state) => state.UserData.value);
   const [groupmodal, Setgroupmodal] = useState(false);
   const [updategrou, Setupdategroup] = useState(false);
+  const [Groupdataname, Setgroupdataname] = useState("");
 
   useEffect(() => {
     const groupRef = ref(db, "grouplist/");
@@ -31,6 +32,14 @@ const MyGroup = () => {
   let HandleremoveConfirm = (item) => {
     remove(ref(db, "grouplist/" + item.uid));
     Setgroupmodal(false);
+  };
+
+  let HandleUpdateconfirm = (item) => {
+    update(ref(db, "grouplist/" + item.uid), {
+      groupName: Groupdataname,
+    }).then(()=>{
+      Setupdategroup(false)
+    })
   };
 
   return (
@@ -72,7 +81,10 @@ const MyGroup = () => {
                     </div>
                   </div>
                   <div className="flex justify-center gap-3">
-                    <button className="px-3  py-2 bg-Secondary text-xl font-semibold font-Nunito text-[#fff] rounded-[5px] ">
+                    <button
+                      onClick={() => Setupdategroup(item)}
+                      className="px-3  py-2 bg-Secondary text-xl font-semibold font-Nunito text-[#fff] rounded-[5px] "
+                    >
                       <MdOutlineDriveFileRenameOutline />
                     </button>
                     <button
@@ -98,6 +110,35 @@ const MyGroup = () => {
                         </button>
                         <button
                           onClick={() => Setgroupmodal(false)}
+                          className="py-2 px-3 bg-Secondary rounded-md text-[#fff] font-Nunito font-semibold text-lg"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {updategrou && updategrou.uid == item.uid && (
+                  <div className="bg-ThirdColor/40 w-full h-full absolute top-0 left-0 flex justify-center items-center">
+                    <div className="w-[400px] h-[250px] bg-[#fff] rounded-md shadow-md shadow-ThirdColor px-12">
+                      <h3 className="text-lg text-[#000] font-semibold font-Nunito text-center  mt-7">
+                        We are permanently Change your group Name. Are you sure?{" "}
+                      </h3>
+                      <input
+                        onChange={(e) => Setgroupdataname(e.target.value)}
+                        className="px-3 w-[200px] h-[37px]  rounded-md ml-10 mt-4 border"
+                        type="text"
+                        placeholder="Type new name"
+                      />
+                      <div className="flex justify-center gap-4 mt-5">
+                        <button
+                          onClick={() => HandleUpdateconfirm(item)}
+                          className="py-2 px-3 bg-Secondary rounded-md text-[#fff] font-Nunito font-semibold text-lg"
+                        >
+                          Yes ,Sure
+                        </button>
+                        <button
+                          onClick={() => Setupdategroup(false)}
                           className="py-2 px-3 bg-Secondary rounded-md text-[#fff] font-Nunito font-semibold text-lg"
                         >
                           Cancel
