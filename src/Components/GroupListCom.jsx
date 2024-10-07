@@ -100,6 +100,8 @@ const GroupListCom = () => {
   const HandlecancelPhoto = () => {
     SetgroupMOdal(false);
   };
+ 
+  
 
   return (
     <section>
@@ -241,7 +243,7 @@ const GroupListCom = () => {
             )}
           </div>
         </div>
-        {groupmodal && (
+        {groupmodal &&  Groupdata.adminid ===data.uid && (
           <div className="bg-ThirdColor/30 w-full h-screen absolute top-0 left-0 flex justify-center items-center z-40  ">
             <div className="w-[500px]  bg-[#fff] rounded-lg shadow-lal shadow-md pb-4">
               <h3 className="text-center text-lg font-medium font-Nunito text-ThirdColor mt-6">

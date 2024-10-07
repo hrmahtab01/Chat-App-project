@@ -63,7 +63,7 @@ const MyGroup = () => {
                   <div className="flex gap-3 mt-[17px]">
                     <div>
                       <img
-                        src={ProfileImage}
+                        src={item.groupphoto}
                         alt="Profile"
                         className="w-[52px] h-[52px] rounded-full object-cover "
                       />
@@ -96,7 +96,7 @@ const MyGroup = () => {
                   </div>
                 </div>
                 {groupmodal && groupmodal.uid == item.uid && (
-                  <div className="bg-ThirdColor/40 w-full h-full absolute top-0 left-0 flex justify-center items-center">
+                  <div className="bg-ThirdColor/40 w-full h-full absolute top-0 left-0 flex justify-center items-center z-50">
                     <div className="w-[400px] h-[200px] bg-[#fff] rounded-md shadow-md shadow-ThirdColor">
                       <h3 className="text-lg text-[#000] font-semibold font-Nunito text-center px-10 mt-7">
                         We are permanently deleting your group. Are you sure?{" "}
@@ -119,7 +119,7 @@ const MyGroup = () => {
                   </div>
                 )}
                 {updategrou && updategrou.uid == item.uid && (
-                  <div className="bg-ThirdColor/40 w-full h-full absolute top-0 left-0 flex justify-center items-center">
+                  <div className="bg-ThirdColor/40 w-full h-full absolute top-0 left-0 flex justify-center items-center z-50">
                     <div className="w-[400px] h-[250px] bg-[#fff] rounded-md shadow-md shadow-ThirdColor px-12">
                       <h3 className="text-lg text-[#000] font-semibold font-Nunito text-center  mt-7">
                         We are permanently Change your group Name. Are you sure?{" "}
