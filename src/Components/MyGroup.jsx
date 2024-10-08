@@ -7,6 +7,12 @@ import { useSelector } from "react-redux";
 import { MdOutlineDelete } from "react-icons/md";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
 import { FaHandLizard } from "react-icons/fa";
+import {
+  getDownloadURL,
+  getStorage,
+  ref as pref,
+  uploadBytes,
+} from "firebase/storage";
 
 const MyGroup = () => {
   const [groupData, setGroupData] = useState([]);
@@ -15,6 +21,10 @@ const MyGroup = () => {
   const [groupmodal, Setgroupmodal] = useState(false);
   const [updategrou, Setupdategroup] = useState(false);
   const [Groupdataname, Setgroupdataname] = useState("");
+  const [groupmodalphoto, SetgroupMOdalphoto] = useState(false);
+  const [Photodata, Setphotodata] = useState("");
+  const storage = getStorage();
+  const [groupid, setgroupid] = useState(null);
 
   useEffect(() => {
     const groupRef = ref(db, "grouplist/");
@@ -37,11 +47,25 @@ const MyGroup = () => {
   let HandleUpdateconfirm = (item) => {
     update(ref(db, "grouplist/" + item.uid), {
       groupName: Groupdataname,
-    }).then(()=>{
-      Setupdategroup(false)
-    })
+    }).then(() => {
+      Setupdategroup(false);
+    });
   };
-
+  let HandlegroupmodalOpen = (item) => {
+    SetgroupMOdalphoto(true);
+    setgroupid(item.uid);
+  };
+  let HandleSubmitphoto = (groupid) => {
+    const storageRef = pref(storage, `groupphoto/ ${Date.now()}`);
+    uploadBytes(storageRef, Photodata).then((snapshot) => {
+      getDownloadURL(storageRef).then((downloadURL) => {
+        update(ref(db, "grouplist/" + groupid), {
+          groupphoto: downloadURL,
+        }),
+          SetgroupMOdalphoto(false);
+      });
+    });
+  };
   return (
     <section>
       <div>
@@ -61,12 +85,16 @@ const MyGroup = () => {
                   className="flex justify-between items-center border-b border-black/25 pb-6 mt-4"
                 >
                   <div className="flex gap-3 mt-[17px]">
-                    <div>
+                    <div className="relative">
                       <img
                         src={item.groupphoto}
                         alt="Profile"
-                        className="w-[52px] h-[52px] rounded-full object-cover "
+                        className="w-[52px] h-[52px] rounded-full object-cover  "
                       />
+                      <div
+                        onClick={() => HandlegroupmodalOpen(item)}
+                        className="w-full h-full bg-ThirdColor/40 absolute top-0 left-0 rounded-full opacity-0 hover:opacity-100 duration-100"
+                      ></div>
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold font-Nunito text-ThirdColor">
@@ -151,6 +179,36 @@ const MyGroup = () => {
             ))}
           </div>
         </div>
+        {groupmodalphoto && (
+          <div className="bg-ThirdColor/30 w-full h-screen absolute top-0 left-0 flex justify-center items-center z-40  ">
+            <div className="w-[500px]  bg-[#fff] rounded-lg shadow-lal shadow-md pb-4">
+              <h3 className="text-center text-lg font-medium font-Nunito text-ThirdColor mt-6">
+                Upload Group Photo
+              </h3>
+              <div className="w-full h-full  flex flex-col justify-center items-center mt-3">
+                <input
+                  onChange={(e) => Setphotodata(e.target.files[0])}
+                  className="mx-auto"
+                  type="file"
+                />
+                <div className="flex gap-3 mt-5">
+                  <button
+                    onClick={() => HandleSubmitphoto(groupid)}
+                    className="py-3 px-6 bg-Secondary text-lg font-semibold text-[#fff] font-Nunito rounded-lg shadow-md shadow-ThirdColor hover:scale-105 duration-150  hover:translate-y-[-4px]"
+                  >
+                    Submit
+                  </button>
+                  <button
+                    onClick={() => SetgroupMOdalphoto(false)}
+                    className="py-3 px-6 bg-Secondary text-lg font-semibold text-[#fff] font-Nunito rounded-lg shadow-md shadow-ThirdColor hover:scale-105 duration-150  hover:translate-y-[-4px]"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

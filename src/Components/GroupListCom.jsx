@@ -80,28 +80,26 @@ const GroupListCom = () => {
     SetGroupsrcdata(grouplist);
   };
 
-  const HandlegroupmodalOpen = (item) => {
-    SetgroupMOdal(true);
-    setgroupid(item.uid);
-  };
+  // const HandlegroupmodalOpen = (item) => {
+  //   SetgroupMOdal(true);
+  //   setgroupid(item.uid);
+  // };
 
-  const HandleSubmitphoto = (groupid) => {
-    const storageRef = pref(storage, `groupphoto/ ${Date.now()}`);
-    uploadBytes(storageRef, Photodata).then((snapshot) => {
-      getDownloadURL(storageRef).then((downloadURL) => {
-        update(ref(db, "grouplist/" + groupid), {
-          groupphoto: downloadURL,
-        }),then(()=>{
-          SetgroupMOdal(false)
-        })
-      });
-    });
-  };
-  const HandlecancelPhoto = () => {
-    SetgroupMOdal(false);
-  };
- 
-  
+  // const HandleSubmitphoto = (groupid) => {
+  //   const storageRef = pref(storage, `groupphoto/ ${Date.now()}`);
+  //   uploadBytes(storageRef, Photodata).then((snapshot) => {
+  //     getDownloadURL(storageRef).then((downloadURL) => {
+  //       update(ref(db, "grouplist/" + groupid), {
+  //         groupphoto: downloadURL,
+  //       }),then(()=>{
+  //         SetgroupMOdal(false)
+  //       })
+  //     });
+  //   });
+  // };
+  // const HandlecancelPhoto = () => {
+  //   SetgroupMOdal(false);
+  // };
 
   return (
     <section>
@@ -210,10 +208,6 @@ const GroupListCom = () => {
                                 alt="progileimage"
                                 className="w-[52px] h-[52px] rounded-full object-cover"
                               />
-                              <div
-                                onClick={() => HandlegroupmodalOpen(item)}
-                                className="w-full h-full bg-ThirdColor/40 absolute top-0 left-0 rounded-full opacity-0 hover:opacity-100 duration-100"
-                              ></div>
                             </div>
                             <div className="">
                               <h3 className="text-lg font-semibold font-Nunito text-ThirdColor">
@@ -243,7 +237,7 @@ const GroupListCom = () => {
             )}
           </div>
         </div>
-        {groupmodal &&  Groupdata.adminid ===data.uid && (
+        {groupmodal && Groupdata.adminid === data.uid && (
           <div className="bg-ThirdColor/30 w-full h-screen absolute top-0 left-0 flex justify-center items-center z-40  ">
             <div className="w-[500px]  bg-[#fff] rounded-lg shadow-lal shadow-md pb-4">
               <h3 className="text-center text-lg font-medium font-Nunito text-ThirdColor mt-6">
