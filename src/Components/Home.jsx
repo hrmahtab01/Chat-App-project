@@ -22,7 +22,7 @@ const Home = () => {
     if (user) {
       const uid = user.uid;
       dispatch(UserDataStore(user));
-      localStorage.setItem("user", JSON.stringify(user));
+      // localStorage.setItem("user", JSON.stringify(user));
     } else {
       Setverify(false);
       navigate("/");
